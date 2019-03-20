@@ -1,0 +1,414 @@
+@charset "utf-8";
+/*通用/基础样式 begin*/
+html,body,h1,h2,h3,h4,span,i,p,input,select,textarea,button,ul,li,img,th,td{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+*{
+	font-family: "微软雅黑" !important;
+}
+.hidden{
+	display: none;
+}
+/*主页样式 begin*/
+.index-max{
+	width: 100%;
+	height: 100%;
+}
+.index-max .index-top{
+	height: 56px;
+	background: url(../images/horizontal-shadow-bg.png) bottom left repeat-x;
+}
+.index-top-shadow{
+	height: 50px;
+	width: 100%;
+	border-bottom: 1px solid #cccccc;
+	background-color: #0085B8;
+}
+.index-top .logo{
+	float: left;
+	height: 100%;
+	line-height: 100%;
+	width: 250px;
+	color: #fff;
+}
+.index-top .logo .logo-img{
+	float: left;
+	height: inherit;
+	line-height: 50px;
+	width: 34px;
+	background: url(../images/logo-img.png) 0 center no-repeat;
+	margin-left: 10px;
+}
+.index-top .logo .title{
+	float: left;
+    height: inherit;
+    line-height: 50px;
+    margin-left: 10px;
+    font-size: 19px;
+	letter-spacing: 5px;
+}
+.index-top .logo .version-num{
+	font-size: 14px;
+	float: left;
+    height: inherit;
+    line-height: 50px;
+    margin-top: 3px;
+    margin-left: 10px;
+}
+.index-top .top-operate{
+	float: right;
+	height: 50px;
+	line-height: 50px;
+	font-size: 13px;
+	color: #fff;
+	max-width:230px;
+	overflow:hidden;
+}
+.top-operate ul{
+	float: left;
+	height: 100%;
+}
+.top-operate ul.padding-right54px{
+	padding-right: 54px;
+}
+.top-operate ul li{
+	list-style-type: none;
+	float: left;
+	height: inherit;
+	line-height: 50px;
+	cursor:pointer;
+}
+.top-operate ul li:hover,.top-operate ul li.selected,.top-operate .more-operate:hover,.top-operate .more-operate.selected{
+	background: #0193c4;
+}
+.top-operate ul li a{
+	float: left;
+	height: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.top-operate .more-operate > a{
+	height: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+	display: inline-block;
+    position: relative;
+    right: 10px;
+    cursor: pointer;
+}
+.top-operate ul li a span,.top-operate .more-operate a span{
+	float: left;
+	width: 24px;
+	height: 24px;
+	margin-top:13px;
+}
+.top-operate ul li .top-work {
+	background: url(../images/top-work.png) no-repeat;
+}
+.top-operate ul li .top-man {
+	background: url(../images/top-man.png) no-repeat;
+}
+.top-operate ul li .top-msg{
+	background: url(../images/top-msg.png) no-repeat;
+}
+.top-operate ul li .top-setUp{
+	background: url(../images/top-setUp.png) no-repeat;
+}
+.top-operate ul li .top-exit {
+	background: url(../images/top-exit.png) no-repeat;
+}
+.top-operate ul li .top-version {
+	background: url(../images/top-version.png) no-repeat;
+}
+.top-operate .more-operate{
+	position:absolute;
+	right:0;
+	top:0;
+	width:24px;
+	height: inherit;
+	padding-left:10px;
+	padding-right:10px;
+	z-index:99;
+}
+.more-operate .top-operate-more{
+	background: url(../images/top-operate-more.png) no-repeat;
+}
+.more-operate .more-operate-pannel{
+	position:absolute;
+	top:50px;
+	right:0;
+	width:44px;
+	background: #0085B8;
+	display:none;
+}
+.more-operate-pannel ul li{
+	height: 50px;
+	width: inherit;
+}
+.margin-right10px{
+	margin-right:10px;
+}
+
+.index-top .index-menu{
+	float: left;
+	margin-left: 50px;
+	height: 50px;
+	position: relative;
+}
+.index-menu > ul{
+	height: 100%;
+	float: left;
+	overflow: hidden;  
+	position: absolute;
+}
+.index-menu > ul.right150px{
+	right: 150px;
+}
+.index-menu ul li{
+	width: 150px;
+	height: inherit;
+	list-style-type:none;
+	float: left;
+}
+.index-menu ul li.selected,.index-menu ul li:hover,.index-menu .more.selected,.index-menu .more:hover{
+	background: #00779f;
+}
+.index-menu ul li a{
+	float: left;
+	font-size: 16px;
+	height: inherit;
+	line-height: 50px;
+	width: inherit;
+	color: #fff;
+	text-decoration:none;
+	text-align: center;
+	letter-spacing:2px;
+}
+.index-menu .more{
+	float: right;
+	width: 150px;
+	line-height: 50px;
+	text-align: center;
+	position: relative;
+	z-index: 99;
+}
+.index-menu .more a{
+	text-decoration: none;
+	color: #fff;
+	font-size: 16px;
+	display: block;
+	cursor: pointer;
+}
+.more .more-pannel{
+	background: #0085B8;
+	position: absolute;
+	top: 50px;
+	right: 0;
+	width: 150px;
+	height: auto;
+	display: none;
+}
+.more-pannel ul li{
+	height: 50px;
+	width: 100%;
+}
+.index-max .index-content{
+	position: absolute;
+	top: 56px;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+.sidebar{
+	width: 250px;
+	height: 100%;
+	background: url(../images/vertical-shadow-bg.png) top right repeat-y;
+}
+.sidebar-shadow{
+	border-right: 1px solid #cccccc;
+	width: 244px;
+	height: 100%;
+	position: relative;
+}
+.sidebar.folded .sidebar-shadow{
+	width: 44px;
+}
+.sidebar.folded{
+	width: 50px;	
+}
+.sidebar-controller{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: right;
+	border-bottom: 1px solid #e8e8e8;
+}
+.sidebar .sidebar-controller > i{
+	float: right;
+	width: 24px;
+	height: 24px;
+	margin-top: 13px;
+	margin-right: 10px;
+	cursor: pointer;
+	background: url(../images/sidebar-controller-bg.png) no-repeat;
+}
+.sidebar.folded .sidebar-controller > i{
+	margin-right: 10px;
+}
+.sidebar .sidebar-content{
+	width: 100%;
+    position: absolute;
+    top: 51px;
+    right: 0;
+    bottom: 60px;
+    left: 0;
+    overflow: auto;
+}
+.sidebar.folded .sidebar-content{
+	overflow: hidden;	
+}
+/*侧边栏一级菜单*/
+.sidebar ul{ 
+	float:left; 
+	width:100%;
+}
+.sidebar ul li{ 
+	float:left;
+	width:100%; 
+	list-style-type: none;
+	background:#FFFFFF; 
+}
+.sidebar ul li a{ 
+	float:left; 
+	width:100%; 
+	height:50px; 
+	line-height:50px; 
+	color: #7b7b7b;
+	text-indent:5px;
+	text-decoration: none;
+	border-bottom: 1px solid #e8e8e8;
+	font-size: 13px;
+}
+.sidebar ul li a i{
+	float: left;
+    width: 24px;
+    height: 24px;
+    margin-top: 13px;
+    margin-left: 20px;
+}
+.sidebar.folded ul li a i{
+	margin-left:10px; 
+}
+.sidebar.folded ul li a span{
+	display: none;
+}
+.sidebar ul li a .has-subset{
+	float:right;
+	margin-right:10px;
+}
+.sidebar ul li a .level-1st{
+	background: url(../images/icon-level-1st.png) no-repeat;
+}
+/*一级导航图标：图标根据具体内容而定 begin*/
+.sidebar ul li a .my-work{
+	background: url(../images/icon-my-work.png) no-repeat;
+}
+.sidebar ul li a .complain{
+	background: url(../images/icon-complain.png) no-repeat;
+}
+.sidebar ul li a .manage-problem{
+	background: url(../images/icon-manage-problem.png) no-repeat;
+}
+.sidebar ul li a .control-task{
+	background: url(../images/icon-control-task.png) no-repeat;
+}
+.sidebar ul li a .command-dispatch{
+	background: url(../images/icon-command-dispatch.png) no-repeat;
+}
+.sidebar ul li a .penalty{
+	background: url(../images/icon-penalty.png) no-repeat;
+}
+.sidebar ul li a .system-manage{
+	background: url(../images/icon-system-manage.png) no-repeat;
+}
+/*一级导航图标：图标根据具体内容而定 end*/
+
+.sidebar ul li.selected > a,.sidebar ul li a:hover{
+	color: #56b1e0;
+}
+/*侧边栏二级菜单*/
+.sidebar ul li ul li{
+	background:#f8f8f8;
+}
+.sidebar ul li ul li a i{
+	margin-left: 30px;
+}
+.sidebar ul li ul li a .level-2nd{
+	background: url(../images/icon-level-2nd.png) no-repeat;
+}
+.sidebar ul li ul li.selected > a,.sidebar ul li ul li a:hover{ 
+	color: #7dbab2;
+}
+/*侧边栏三级菜单*/
+.sidebar ul li ul li ul li{
+	background:#f2f3f5;
+}
+.sidebar ul li ul li ul li a i{
+	margin-left: 40px;
+}
+.sidebar ul li ul li ul li a .level-3rd{
+	background: url(../images/icon-level-3rd.png) no-repeat;
+}} 
+.sidebar ul li ul li ul li.selected > a,.sidebar ul li ul li ul li a:hover{ 
+	color:#56b1e0;
+}
+.sidebar.folded .copyright{
+	display: none;
+}
+.sidebar .copyright{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid #e8e8e8;
+}
+.sidebar .copyright > span{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	line-height: 50px;
+	font-size: 13px;
+	color: #7b7b7b;
+	text-align: center;
+}
+
+/*右侧内容部分 begin*/
+.index-container {
+    position: absolute;
+    left: 250px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+.index-container.left50px{
+	left: 50px;
+}
+.index-container-iframe {
+    width: 100%;
+    height: 100%;
+}
+.iframe {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%; 
+    border: 0;
+    background: none; 
+}
+/*右侧内容部分 end*/
+/*主页样式 end*/

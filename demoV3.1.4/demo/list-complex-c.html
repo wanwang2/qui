@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>综合列表内容</title>
+
+    <!--框架必需start-->
+    <script type="text/javascript" src="../libs/js/jquery.js"></script>
+    <script type="text/javascript" src="../libs/js/language/cn.js"></script>
+    <script type="text/javascript" src="../libs/js/framework.js"></script>
+    <link href="../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" id="skin" prePath="../" splitMode="true" href="../libs/skins/blue/style.css"/>
+    <!--框架必需end-->
+
+    <!-- 日期选择框start -->
+    <script type="text/javascript" src="../libs/js/form/datePicker/WdatePicker.js"></script>
+    <!-- 日期选择框end -->
+
+    <!-- 数据表格start -->
+    <script type="text/javascript" src="../libs/js/table/quiGrid.js"></script>
+    <!-- 数据表格end -->    
+    <!-- 引入数据start -->
+    <script src="data.json" type="text/javascript" charset="gbk"></script>
+    <!-- 引入数据end -->
+
+    <!-- 自定义样式start -->
+    <link rel="stylesheet" type="text/css" href="../common/css/core.css">
+    <!-- 自定义样式end -->
+    
+    <!-- 自定义脚本start -->
+    <script type="text/javascript" src="../common/js/uc-ui.js"></script>
+    <!-- 自定义脚本end -->
+</head>
+<body>
+    <div class="list-max">
+        <div class="half-div">
+            <table  class="form-table">
+                <tr>
+                    <th>企业法人：</th>
+                    <td><input type="text" class="validate[required]"/><span class="star">*</span></td>
+                    <th>案件案件编号案件编号：</th>
+                    <td><input type="text" class="validate[required,custom[noSpecialCaracters]]"/><span class="star">*</span></td>
+                </tr>
+                <tr>
+                    <th>开始时间：</th>
+                    <td>
+                         <input type="text" class="date"/>
+                    </td>
+                    <th>结束时间：</th>
+                    <td>
+                         <input type="text" class="date"/>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th>时间段：</th>
+                    <td><input type="text" class="date input-time-split validate[required]"/><span class="time-split-spacing"></span><input type="text" class="date input-time-split validate[required]"/><span class="star">*</span></td>
+                    <th>企业法人联系电话：</th>
+                    <td>
+                         <input type="text" class="input"/>
+                    </td>
+                </tr>  
+                <tr>
+                    <th>催办期限：</th>
+                    <td>
+                        <input type="text" class="input-operable validate[required]"/><input type="button" class="small-btn" value="选"/><input type="button" class="small-btn" value="清"/><span class="star">*</span>
+                    </td>
+                    <th>类型：</th>
+                    <td>
+                        <select class="validate[required]"><option></option><option>璧山县</option></select><span class="star">*</span>
+                    </td>
+                </tr>
+                <tr>                        
+                    <th>事发地址：</th>
+                    <td><input type="text" class="input"/></td>
+                     <th>审批人：</th>
+                    <td><input type="text" class="input-operable"/><input type="button" class="small-btn" value="选"/><input type="button" class="small-btn" value="清"/>
+                    </td>
+                </tr> 
+                <tr>
+                    <th>爱好：</th>
+                    <td>
+                        <input class="checkbox" type="checkbox" name="bumen" id="checkbox1"><label for="checkbox1">足球</label>
+                        <input class="checkbox" type="checkbox" name="bumen" id="checkbox2"><label for="checkbox2">篮球</label>
+                    </td>
+                    <th>性别：</th>
+                    <td>
+                        <input class="radio" type="radio" name="bumen" id="radio" checked><label for="radio">男</label>
+                        <input class="radio" type="radio" id="radio2" name="bumen"><label for="radio2">女</label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>事发内容：</th>
+                    <td colspan="3"><textarea class="validate[required] input-colspan3"></textarea><span class="star">*</span></td>
+                </tr>
+                <tr>
+                    <th>文件上传：</th>
+                    <td>
+                        <input type="file"/>
+                    </td>
+                     <th>行业类别：</th>
+                    <td>
+                        <div class="suggestion" id="suggestion2" keepDefaultStyle="true"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="half-div">
+            <div id="dataBasic"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var gridData;
+        function initComplete(){
+            var grid = $("#dataBasic").quiGrid({
+                height:'100%',
+                rowHeight:30,
+                headerRowHeight:40,
+                width:'100%',   
+                percentWidthMode:true,
+                dataAction:'local',
+                usePager:true,
+                page:1,
+                pageSize:20,
+                pageSizeOptions:[5,10,20,30,50,100],
+                sortName:'userId',
+                frozen:true,
+                // title:'用户信息',
+                enabledSort:true,
+                allowUnSelectRow:true,
+                rownumbers:true,
+                checkbox:true,
+                selectRowButtonOnly:false,
+                columns:[
+                    { display: '姓名', name: 'userName', align: 'center', width: "10%",minWidth:100},
+                    { display: '部门名称', name: 'orgName', align: 'center', width: "20%",showTitle:true},
+                    { display: '性别', name: 'userSex', align: 'center', width: "15%"},
+                    { display: '事发地址', name: 'userEmployTime', align: 'center',  width:"20%"} ,
+                    { display: '学历', name: 'userEducation', align: 'center',  width:"10%"} ,
+                    { display: '任务期限', name: 'userEducation', align: 'center',  width:"10%"} ,
+                    { display: '任务状态', name: 'userEducation', align: 'center',  width:"15%"} ,
+                    { display: '操作', align:'center',width:140,isAllowHide:false,render:function(rowdata,rowindex,value,column){
+                            return '<div class="padding_top4 padding_left5">'
+                            + '<span class="img_list hand" title="查看" onclick="onView(' + rowdata.userId + ')"></span>'
+                            + '<span class="img_edit hand" title="修改" onclick="onEdit(' + rowdata.userId + ')"></span>' 
+                            + '<span class="img_delete hand" title="删除" onclick="onDelete(' + rowdata.userName+','+rowindex + ')" ></span>'
+                            + '<span class="img_fpgnqx hand" title="分派功能权限"></span>'
+                            + '<span class="img_fpsjlqx hand" title="分派数据列权限"></span>'
+                            + '<span class="img_fpsjhqx hand" title="分派数据行权限"></span>'
+                            +'</div>';
+                        }
+                    }
+                ],
+                toolbar:{
+                    items:[
+                        {text:'新增',iconClass:'icon_add'},
+                        {text:'批量删除',iconClass:'icon_delete'},
+                        {text:'导入',iconClass:'icon_import'},
+                        {text:'导出',iconClass:'icon_export'}
+                    ]
+                },
+                data:gridData
+            });
+        }
+    </script>
+</body>
+</html>

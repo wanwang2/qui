@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>可检索列表页</title>
+	
+	<!--框架必需start-->
+	<script type="text/javascript" src="../libs/js/jquery.js"></script>
+	<script type="text/javascript" src="../libs/js/language/cn.js"></script>
+	<script type="text/javascript" src="../libs/js/framework.js"></script>
+	<link href="../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" id="skin" prePath="../" splitMode="true" href="../libs/skins/blue/style.css"/>
+	<!--框架必需end-->
+
+	<!-- 数据表格start -->
+	<script type="text/javascript" src="../libs/js/table/quiGrid.js"></script>
+	<!-- 数据表格end -->	
+	<!-- 引入数据start -->
+	<script src="data.json" type="text/javascript" charset="gbk"></script>
+	<!-- 引入数据end -->
+
+	<!-- 日期选择框start -->
+	<script type="text/javascript" src="../libs/js/form/datePicker/WdatePicker.js"></script>
+	<!-- 日期选择框end -->
+
+	<!-- 自定义样式start -->
+    <link rel="stylesheet" type="text/css" href="../common/css/core.css">
+    <!-- 自定义样式end -->
+
+    <!-- 自定义脚本start -->
+    <script type="text/javascript" src="../common/js/uc-ui.js"></script>
+    <!-- 自定义脚本end -->
+	
+</head>
+<body>
+	<div class="list-max">
+		<!--  查询区域start -->  
+	  	<div class="box2 search-content folder" panelTitle="综合查询条件">
+			<div class="search-condition">
+				<form>
+					<table class="form-table search-table">
+						<tr>
+							<th>标题：</th>
+							<td><input type="text" /></td>
+							<th>时间段：</th>
+							<td><input type="text" class="date input-time-split"/><span class="time-split-spacing"></span><input type="text" class="date input-time-split"/></td>
+						</tr>
+					</table>
+				</form>				
+			</div>
+			<div class="search-button">
+				<button type="button">查询</button>
+				<button type="reset">重置</button>
+			</div>
+	    </div>
+		<!--  查询区域end -->  
+
+		<!-- 列表区域start  -->
+	    <div class="list-list">      
+	        <div id="dataBasic"></div>
+	    </div>
+		<!-- 列表区域end  -->
+	</div>
+
+	<script type="text/javascript">
+		var gridData;
+		function initComplete(){
+			var grid = $("#dataBasic").quiGrid({
+				height:'100%',
+				rowHeight:30,
+				headerRowHeight:40,
+				width:'100%',	
+				percentWidthMode:true,
+				dataAction:'local',
+				usePager:true,
+				page:1,
+				pageSize:20,
+				pageSizeOptions:[5,10,20,30,50,100],
+				sortName:'userId',
+				frozen:true,
+				// title:'用户信息',
+				enabledSort:true,
+				allowUnSelectRow:true,
+				rownumbers:true,
+				checkbox:true,
+				selectRowButtonOnly:false,
+				columns:[
+					{ display: '姓名', name: 'userName', align: 'center', width: "10%",minWidth:100},
+				    { display: '部门名称', name: 'orgName', align: 'center', width: "20%",showTitle:true},
+				    { display: '性别', name: 'userSex', align: 'center', width: "15%"},
+				    { display: '事发地址', name: 'userEmployTime', align: 'center',  width:"20%"} ,
+				    { display: '学历', name: 'userEducation', align: 'center',  width:"10%"} ,
+					{ display: '任务期限', name: 'userEducation', align: 'center',  width:"10%"} ,
+					{ display: '任务状态', name: 'userEducation', align: 'center',  width:"15%"} ,
+					{ display: '操作', align:'center',width:100,isAllowHide:false,render:function(rowdata,rowindex,value,column){
+							return '<div class="padding_top4 padding_left5">'
+							+ '<span class="img_list hand" title="查看" onclick="onView(' + rowdata.userId + ')"></span>'
+                            + '<span class="img_edit hand" title="修改" onclick="onEdit(' + rowdata.userId + ')"></span>' 
+                            + '<span class="img_delete hand" title="删除" onclick="onDelete(' + rowdata.userName+','+rowindex + ')" ></span>'
+							+'</div>';
+						}
+					}
+				],
+				toolbar:{
+					items:[
+						{text:'新增',iconClass:'icon_add'},
+						{text:'批量删除',iconClass:'icon_delete'},
+						{text:'导入',iconClass:'icon_import'},
+						{text:'导出',iconClass:'icon_export'}
+					]
+				},
+				data:gridData
+			});
+		}
+	</script>
+</body>
+</html>

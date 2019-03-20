@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>可检索列表页</title>
+	
+	<!--框架必需start-->
+	<script type="text/javascript" src="../libs/js/jquery.js"></script>
+	<script type="text/javascript" src="../libs/js/language/cn.js"></script>
+	<script type="text/javascript" src="../libs/js/framework.js"></script>
+	<link href="../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" type="text/css" id="skin" prePath="../" splitMode="true" href="../libs/skins/blue/style.css"/>
+	<!--框架必需end-->
+	
+	<!-- 弹窗组件（这里引入只为“非iframe弹窗（复杂内容）”示例需要）start -->
+	<!-- 定义弹窗移动start -->
+	<script type="text/javascript" src="../libs/js/popup/drag.js"></script>
+	<!-- 定义弹窗移动end -->	
+	<script type="text/javascript" src="../libs/js/popup/dialog.js"></script>  
+	<!-- 弹窗组件（这里引入只为“非iframe弹窗（复杂内容）”示例需要）end -->
+	
+</head>
+<body>
+	<button onclick="openComplex()">查看</button>
+	
+	<script type="text/javascript">
+		function openComplex(){
+			Dialog.open({
+				Title:"查看",
+				URL:'list-alert-c.html',
+				ShowButtonRow:true,
+				Width:800,
+				Height:500
+			});
+		}
+	</script>
+</body>
+</html>
