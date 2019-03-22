@@ -6,14 +6,17 @@
     <script src="./libs/echarts.min.js"></script>
 </head>
 <body>
-     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 600px;height:400px;"></div>
+	<!-- 容器 -->
+	<div>
+		<div id="main_1" style="width: 200px;height:300px;"></div>
+		<div id="main_2" style="width: 200px;height:300px;"></div>
+		<div id="main_3" style="width: 200px;height:300px;"></div>
+	</div>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-
+        var myChart1 = echarts.init(document.getElementById('main_1'));
         // 指定图表的配置项和数据
-		option = {
+		option1 = {
 			title: {
                 text: '安宁'
             },
@@ -58,9 +61,112 @@
 				}
 			]
 		};
-
         // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        myChart1.setOption(option1);
+    </script>
+	<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart2 = echarts.init(document.getElementById('main_2'));
+        // 指定图表的配置项和数据
+		option2 = {
+			title: {
+                text: '安宁'
+            },
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b}: {c} ({d}%)"
+			},
+			legend: {
+				orient: 'horizontal',
+				y: 'bottom',
+				data:['一般','较大','重大']
+			},
+			series: [
+				{
+					name:'严重程度',
+					type:'pie',
+					radius: ['50%', '70%'],
+					avoidLabelOverlap: false,
+					label: {
+						normal: {
+							show: false,
+							position: 'center'
+						},
+						emphasis: {
+							show: true,
+							textStyle: {
+								fontSize: '30',
+								fontWeight: 'bold'
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data:[
+						{value:335, name:'一般'},
+						{value:310, name:'较大'},
+						{value:234, name:'重大'}
+					]
+				}
+			]
+		};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+    </script>
+	<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart3 = echarts.init(document.getElementById('main_3'));
+        // 指定图表的配置项和数据
+		option3 = {
+			title: {
+                text: '安宁'
+            },
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b}: {c} ({d}%)"
+			},
+			legend: {
+				orient: 'horizontal',
+				y: 'bottom',
+				data:['一般','较大','重大']
+			},
+			series: [
+				{
+					name:'严重程度',
+					type:'pie',
+					radius: ['50%', '70%'],
+					avoidLabelOverlap: false,
+					label: {
+						normal: {
+							show: false,
+							position: 'center'
+						},
+						emphasis: {
+							show: true,
+							textStyle: {
+								fontSize: '30',
+								fontWeight: 'bold'
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data:[
+						{value:335, name:'一般'},
+						{value:310, name:'较大'},
+						{value:234, name:'重大'}
+					]
+				}
+			]
+		};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart3.setOption(option3);
     </script>
 </body>
 </html>
