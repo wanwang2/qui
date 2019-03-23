@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单填写页（选项卡）</title>
+
+    <!--框架必需start-->
+    <script type="text/javascript" src="../libs/js/jquery.js"></script>
+    <script type="text/javascript" src="../libs/js/language/cn.js"></script>
+    <script type="text/javascript" src="../libs/js/framework.js"></script>
+    <link href="../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" id="skin" prePath="../" splitMode="true" href="../libs/skins/blue/style.css"/>
+    <!--框架必需end-->
+
+    <!--动态选项卡start-->
+    <script type="text/javascript" src="../libs/js/nav/dynamicTab.js"></script>
+    <!--动态选项卡end-->
+
+    <!-- 自定义样式start -->
+    <link rel="stylesheet" type="text/css" href="../common/css/core.css">
+    <!-- 自定义样式end -->
+</head>
+<body>
+	<div class="list-max">
+        <div id="tab"></div>
+        <div id="tab_container" class="tab-container"></div>
+    </div>
+
+	<script type="text/javascript">
+        $(function(){
+            var tab = new TabView( {
+                containerId :'tab',
+                pageid :'tab_container',
+                cid :'tab1',
+                position :"top"
+            });
+            tab.add( {
+                id :'tab1_index1',
+                title :"数据信息",
+                url :"tab-tab-c.html",
+                isClosed :false
+            });
+            tab.add( {
+                id :'tab1_index2',
+                title :"选发给2",
+                url :"add-groups.html",
+                isClosed :false
+            });
+            tab.activate("tab1_index1");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>智慧环保</title>
+
+	<link rel="stylesheet" type="text/css" href="../common/css/index.css">
+</head>
+<body>
+	<div class="index-max">
+		<!-- 顶部 begin -->
+		<div class="index-top">
+            <div class="index-top-shadow">
+    			<div class="logo">
+                    <i class="logo-img"></i>
+    				<span class="title">智慧环保</span>
+    				<span class="version-num">v3.0</span>
+    			</div>
+    			<div class="index-menu">
+    				<ul>
+        				<li><a href="#">我的工作</a></li>
+            			<li><a href="#">行政审批</a></li>
+            			<li><a href="#">环境监管</a></li>
+            			<li><a href="#">环境监测</a></li>
+            			<li><a href="#">污染源</a></li>
+            			<li><a href="#">知识库</a></li>
+            			<li><a href="#">风险防控</a></li>
+            			<li><a href="#">数据发布</a></li>
+                        <li><a href="#">配置管理</a></li>
+    				</ul>
+    			</div>
+    			<div class="top-operate">
+    				<ul>
+                        <li><a href="#" title="首页"><span class="top-work"></span></a></li>
+                        <li><a href="#" title="管理员"><span class="top-man"></span></a></li>
+                        <li><a href="#" title="信息"><span class="top-msg"></span></a></li>
+                        <li><a href="#" title="设置"><span class="top-setUp"></span></a></li>
+                        <li><a href="#" title="退出"><span class="top-exit"></span></a></li>
+                        <li><a href="#" title="版本信息"><span class="top-version"></span></a></li>
+    			    </ul>
+    			</div>
+            </div>
+		</div>
+		<!-- 顶部 end -->
+		<!-- 主体部分 begin -->
+		<div class="index-content">
+            <!-- 侧边导航 begin -->
+			<div class="sidebar">
+                <div class="sidebar-shadow">
+                    <div class="sidebar-controller"><i onclick="sidebarToggle()"></i></div>  
+                    <div class="sidebar-content"> 
+                        <ul>
+                            <li>
+                                <a href="javascript:;" title="功能列表"><i class="level-1st"></i><span>功能列表</span></a>
+                                <ul>                            
+                                    <li>
+                                        <a href="javascript:;"><i class="level-2nd"></i><span>列表页</span></a>
+                                        <ul>
+                                            <li><a href="list-nosearch.html" target="index-iframe"><i class="level-3rd"></i><span>列表页(无检索条件)</span></a></li>
+                                            <li><a href="list-search1.html" target="index-iframe"><i class="level-3rd"></i><span>可检索列表页1</span></a></li>
+                                            <li><a href="list.html" target="index-iframe"><i class="level-3rd"></i><span>可检索列表页2</span></a></li>
+                                            <li><a href="list-alert.html" target="index-iframe"><i class="level-3rd"></i><span>列表页(弹出框)</span></a></li>
+                                            <li><a href="list-complex.html" target="index-iframe"><i class="level-3rd"></i><span>综合列表页</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;"><i class="level-2nd"></i><span>表单填写页</span></a>
+                                        <ul>
+                                            <li><a href="add.html" target="index-iframe"><i class="level-3rd"></i><span>表单填写页(双列布局)</span></a></li>
+                                            <li><a href="single-table.html" target="index-iframe"><i class="level-3rd"></i><span>表单填写页(单列布局)</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="add-groups.html" target="index-iframe"><i class="level-2nd"></i><span>表单填写页(分组)</span></a></li>
+                                    <li>
+                                        <a href="javascript:;"><i class="level-2nd"></i><span>选项卡</span></a>
+                                        <ul>
+                                            <li><a href="tab-basic.html" target="index-iframe"><i class="level-3rd"></i><span>基本选项卡</span></a></li>
+                                            <li><a href="add-tab.html" target="index-iframe"><i class="level-3rd"></i><span>动态选项卡</span></a></li>
+                                            <li><a href="tab-tab.html" target="index-iframe"><i class="level-3rd"></i><span>选项卡(图与表格切换)</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="javascript:;"><i class="level-2nd"></i><span>信息查看</span></a>
+                                        <ul>
+                                            <li><a href="show.html" target="index-iframe"><i class="level-3rd"></i><span>信息查看</span></a><li>
+                                            <li><a href="show-groups.html" target="index-iframe"><i class="level-3rd"></i><span>分组信息查看</span></a><li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="charts.html" target="index-iframe"><i class="level-2nd"></i><span>统计图表页</span></a></li>
+                                    <li><a href="charts-alert.html" target="index-iframe"><i class="level-2nd"></i><span>统计图表页(弹出框)</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:;" title="我的工作"><i class="my-work"></i><span>我的工作</span></a>
+                                <ul>                            
+                                    <li><a href="#"><i class="level-2nd"></i><span>监察任务1</span></a></li>
+                                    <li><a href="#"><i class="level-2nd"></i><span>监察任务2</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:;" title="信访投诉"><i class="complain"></i><span>信访投诉<span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" title="问题管理"><i class="manage-problem"></i><span>问题管理</span></a>
+                            </li>
+                                <li>
+                                <a href="javascript:;" title="监察任务"><i class="control-task"></i><span>监察任务</span></a>
+                                <ul>                            
+                                    <li><a href="#"><i class="level-2nd"></i><span>监察任务1</span></a></li>
+                                    <li><a href="#"><i class="level-2nd"></i><span>监察任务2</span></a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:;" title="指挥调度"><i class="command-dispatch"></i><span>指挥调度</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" title="行政处罚"><i class="penalty"></i><span>行政处罚</span></a>
+                            </li>
+                            <li>
+                                <a href="#" title="系统管理"><i class="system-manage"></i><span>系统管理</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:;"><i class="level-2nd"></i><span>随机配置</span></a>
+                                        <ul>
+                                            <li><a href="#"><i class="level-3rd"></i><span>业务规则</span></a></li>
+                                            <li><a href="#"><i class="level-3rd"></i><span>业务流程</span></a></li>
+                                            <li><a href="#"><i class="level-3rd"></i><span>用户角色</span></a></li>
+                                        </ul>
+                                    </li>   
+                                    <li><a href="#"><i class="level-2nd"></i><span>巡查配置</span></a></li>
+                                    <li><a href="#"><i class="level-2nd"></i><span>网络管理</span></a></li>
+                                </ul>
+                            </li>
+                        </ul> 
+                    </div>  
+                    <div class="copyright"><span>扬讯技术</span></div>   
+                </div>            
+            </div>
+            <!-- 侧边导航 end -->
+
+            <!-- 右侧内容部分 begin -->
+            <div class="index-container"> 
+                <!-- <div class="index-container-iframe"> -->
+                    <iframe class="iframe" frameborder="0" name="index-iframe" src="list-nosearch.html"></iframe>
+                <!-- </div> -->
+            </div>
+            <!-- 右侧内容部分 end -->
+		</div>
+		<!-- 主体部分 end -->
+	</div>
+
+	<script type="text/javascript" src="../common/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="../common/js/uc-ui.js"></script>
+</body>
+</html>

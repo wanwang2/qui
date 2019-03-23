@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单填写页（分组）</title>
+
+    <!--框架必需start-->
+    <script type="text/javascript" src="../libs/js/jquery.js"></script>
+    <script type="text/javascript" src="../libs/js/language/cn.js"></script>
+    <script type="text/javascript" src="../libs/js/framework.js"></script>
+    <link href="../libs/css/import_basic.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" id="skin" prePath="../" splitMode="true" href="../libs/skins/blue/style.css"/>
+    <!--框架必需end-->
+
+    <!-- 日期选择框start -->
+    <script type="text/javascript" src="../libs/js/form/datePicker/WdatePicker.js"></script>
+    <!-- 日期选择框end -->
+
+    <!-- 自定义样式start -->
+    <link rel="stylesheet" type="text/css" href="../common/css/core.css">
+    <!-- 自定义样式end -->
+    
+    <!-- 自定义脚本start -->
+    <script type="text/javascript" src="../common/js/uc-ui.js"></script>
+    <!-- 自定义脚本end -->
+
+</head>
+<body>
+	<div class="list-max">
+        <div class="list-content">
+            <div class="box2 content" panelTitle="新增任务（任务单）">
+                <form>
+                    <div class="form-group">
+                        <div class="form-head">
+                            <span class="left">
+                                <i></i>任务基本信息
+                            </span>
+                            <span class="right"></span>
+                        </div>
+                        <table class="form-table">
+                            <tr>
+                                <th>企业法人联标题：</th>
+                                <td>
+                                    <input type="text" class="input"/>
+                                </td>
+                                <th>案件编号：</th>
+                                <td>
+                                    <input type="text" class="input"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>开始时间：</th>
+                                <td>
+                                     <input type="text" class="date"/>
+                                </td>
+                                <th>结束时间：</th>
+                                <td>
+                                     <input type="text" class="date"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-head">
+                            <span class="left">
+                                <i></i>任务基本信息
+                            </span>
+                            <span class="right"></span>
+                        </div>
+                        <table class="form-table">
+                            <tr>
+                                <th>企业法人联标题：</th>
+                                <td>
+                                    <input type="text" class="input"/>
+                                </td>
+                                <th>案件编号：</th>
+                                <td>
+                                    <input type="text" class="input"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>时间段：</th>
+                                <td><input type="text" class="date input-time-split"/><span class="time-split-spacing"></span><input type="text" class="date input-time-split"/></td>
+                                <th>企业法人联系电话：</th>
+                                <td>
+                                     <input type="text" class="input"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>催办期限：</th>
+                                <td>
+                                    <input type="text" class="input-operable"/><input type="button" class="small-btn" value="选"/><input type="button" class="small-btn" value="清"/>
+                                </td>
+                                <th>类型：</th>
+                                <td>
+                                    <select class="select">
+                                        <option>璧山县</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-head">
+                            <span class="left">
+                                <i></i>任务基本信息
+                            </span>
+                            <span class="right"></span>
+                        </div>
+                        <table class="form-table">
+                             <tr>
+                                <th>审批人：</th>
+                                <td>
+                                    <input type="text" class="input-operable"/><input type="button" class="small-btn" value="选"/><input type="button" class="small-btn" value="清"/>
+                                </td>
+                                <th>事发地址：</th>
+                                <td><input type="text" class="input"/></td>
+                            </tr>
+                            <tr>
+                                <th>事发内容：</th>
+                                <td colspan="3"><textarea class="input-colspan3"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="list-btm">
+            <div class="list-btm-div">
+                <button>重置</button>
+                <button>暂存</button>
+                <button disabled>提交</button>
+                <button>返回</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
