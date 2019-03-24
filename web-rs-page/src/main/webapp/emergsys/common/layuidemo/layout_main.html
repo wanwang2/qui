@@ -81,7 +81,16 @@
 			height: 74px;
 			float: left;
 		}
+		.icon-tool-member-chart{
+			height: 35px;
+		}
 		.icon-tool-member img{
+			width: 37px;
+			height: 37px;
+			background-repeat: no-repeat;
+			background-position:center;
+		}
+		.icon-tool-member-chart img{
 			width: 37px;
 			height: 37px;
 			background-repeat: no-repeat;
@@ -90,6 +99,13 @@
 		.icon-tool-member p{
 			height: 10px;
 			color: #C1C9D7;
+			margin-top:5px;
+			font-size:12px;
+			
+		}
+		.icon-tool-member-chart span{
+			height: 10px;
+			color: #94A0BA;
 			margin-top:5px;
 			font-size:12px;
 			
@@ -589,11 +605,11 @@
 					          			<p>张三</p> 
 					          		</div>
 								  	<div class="icon-tool-member">
-					          			<img alt="" src="./images/u222.png">
+					          			<img alt="" src="./images/u222.png" style="background-image: url('./images/u228.png');">
 					          			<p>李四</p> 
 					          		</div>
 					          		<div class="icon-tool-member">
-					          			<img alt="" src="./images/u222.png">
+					          			<img alt="" src="./images/u222.png" style="background-image: url('./images/u228.png');">
 					          			<p>王五</p> 
 					          		</div>
 								  </div>
@@ -609,7 +625,54 @@
 					          	<div class="layui-card right-panel" style="height: 400px;"> 
 								  <div class="layui-card-header">聊天记录</div>
 								  <div class="layui-card-body">
-								  	vvv
+								  	<!-- 对应一条聊天记录 -->
+								  	<div class="layui-col-lg12 " style="height: 80px">
+								  		<div class="icon-tool-member-chart layui-col-lg12">
+								  			<!-- 头像 -->
+								  			<img class="layui-col-lg2 " alt="" src="./images/u222.png" style="background-image: url('./images/u228.png');">
+								  			<span class="layui-col-lg2 ">12:00:00</span>
+								  			<span class="layui-col-lg4 ">张山（应急策划组）</span>
+								  		</div>
+								  		<div class="layui-col-lg12 " style="color:#ff0000;text-align: left">
+								  			<span  style="color:#00ff00;width: 350px;text-align: left;pre-wrap">
+								  			请运送物质到泸州老窖
+								  			请运送物质到泸----州老窖
+								  			</span>
+								  		</div>
+								  	</div>
+								  	<!-- 一条记录结束 -->
+								 	<!-- 对应一条聊天记录 -->
+								  	<div class="layui-col-lg12 " style="height: 80px">
+								  		<div class="icon-tool-member-chart layui-col-lg12">
+								  			<!-- 头像 -->
+								  			<img class="layui-col-lg2 " alt="" src="./images/u222.png" style="background-image: url('./images/u228.png');">
+								  			<span class="layui-col-lg2 ">12:00:00</span>
+								  			<span class="layui-col-lg4 ">张山（应急策划组）</span>
+								  		</div>
+								  		<div class="layui-col-lg12 " style="color:#ff0000;text-align: left">
+								  			<span  style="color:#00ffff;width: 350px;text-align: left;pre-wrap">
+								  			请运送物质到泸州老窖
+								  			请运送物质到泸----州老窖
+								  			</span>
+								  		</div>
+								  	</div>
+								  	<!-- 一条记录结束 -->
+								  	<!-- 对应一条聊天记录 -->
+								  	<div class="layui-col-lg12 " style="height: 80px">
+								  		<div class="icon-tool-member-chart layui-col-lg12">
+								  			<!-- 头像 -->
+								  			<img class="layui-col-lg2 " alt="" src="./images/u222.png" style="background-image: url('./images/u228.png');">
+								  			<span class="layui-col-lg2 ">12:00:00</span>
+								  			<span class="layui-col-lg4 ">张山（应急策划组）</span>
+								  		</div>
+								  		<div class="layui-col-lg12 " style="color:#ff0000;text-align: left">
+								  			<span  style="color:#FFCC99;width: 350px;text-align: left;pre-wrap">
+								  			请运送物质到泸州老窖
+								  			请运送物质到泸----州老窖
+								  			</span>
+								  		</div>
+								  	</div>
+								  	<!-- 一条记录结束 -->
 								  </div>
 								  
 								</div>
@@ -632,7 +695,7 @@
 								</div>
 					        </div>
 					        <div class="layui-col-lg12">
-					          <div class="layui-card right-panel" > 
+					          <div class="layui-card right-panel" style="height: 200px"> 
 					          	<div class="layui-card-body" style="height: 265px;">
 						          		<div class="icon-tool">
 						          			<img alt="" src="./images/u540.png">
