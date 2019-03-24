@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>EnterprsieRiskInfo详情</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="http://127.0.0.1:8011/web-bp-build/" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<style type="text/css">
+#showTable th{
+	width: 100px;
+}
+</style>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<script type="text/javascript">
+var id = parent.parentEnterprsieRiskInfoId;
+$(function(){
+	loadEnterprsieRiskInfoDetails();
+});
+
+function loadEnterprsieRiskInfoDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/enterprsieriskinfo/get",
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") { 
+				if(data.data) {
+					var obj = data.data;
+					$("table td").each(function(){
+						var value = obj[$(this).attr('id')];
+						$(this).text(value == 'null' || value == null ? '' : value);
+					});
+				}
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+			
+		}
+	});
+}
+</script>
+</head>
+<body>
+	<div class="list-max">
+		<table id="showTable" class="show-table">
+					<tr>
+						<th>id：</th>
+						<td id="id"></td>			
+					</tr>
+					<tr>
+						<th>企业id：</th>
+						<td id="enterpriseId"></td>			
+					</tr>
+					<tr>
+						<th>风险属性：</th>
+						<td id="riskAttribute"></td>			
+					</tr>
+					<tr>
+						<th>环境风险等级code：</th>
+						<td id="riskLevelCode"></td>			
+					</tr>
+					<tr>
+						<th>环境风险等级name：</th>
+						<td id="riskLevelName"></td>			
+					</tr>
+					<tr>
+						<th>风险评估报告（有/无）：</th>
+						<td id="riskAssRewport"></td>			
+					</tr>
+					<tr>
+						<th>风评报告备案(有备案/无备案)：</th>
+						<td id="isRecorded"></td>			
+					</tr>
+					<tr>
+						<th>突发环境应急事件应急预案备案：</th>
+						<td id="sdEventPlan"></td>			
+					</tr>
+					<tr>
+						<th>突发环境事件应急预案备案：</th>
+						<td id="sdPlRecord"></td>			
+					</tr>
+					<tr>
+						<th>风险单元数：</th>
+						<td id="riskUnitNum"></td>			
+					</tr>
+					<tr>
+						<th>主要风险物质：</th>
+						<td id="majorRiskMaterial"></td>			
+					</tr>
+					<tr>
+						<th>应急负责人：</th>
+						<td id="emergManager"></td>			
+					</tr>
+					<tr>
+						<th>应急负责人电话：</th>
+						<td id="tel"></td>			
+					</tr>
+					<tr>
+						<th>附件批次id：</th>
+						<td id="catalogId"></td>			
+					</tr>
+					<tr>
+						<th>版本时间：</th>
+						<td id="versionTime"></td>			
+					</tr>
+					<tr>
+						<th>状态：</th>
+						<td id="status"></td>			
+					</tr>
+		</table>
+	</div>
+</body>
+</html>

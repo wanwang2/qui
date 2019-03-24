@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新增化学物质</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<script type="text/javascript">
+var id = parent.parentRsChemicalSubstanceId;
+
+function initComplete(){
+	if(id != ""){
+		loadRsChemicalSubstanceDetails();
+	}
+}
+
+function loadRsChemicalSubstanceDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rschemicalsubstance/get", 
+		dataType : "json",
+		contentType : "application/json; charset=utf-8", 
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") {
+				if(data.data) {
+					var obj = data.data;
+                   $("table input,table textarea").each(function(){
+                        var value = obj[$(this).attr('id')];
+                        $(this).val(value == 'null' || value == null ? '' : value);
+                    });
+					$("#rschemicalsubstanceStatus").setValue(data.data.state);
+					$("#rschemicalsubstanceStatus").render();
+				}
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+		}
+	}); 
+}
+
+
+function addOrUpateRsChemicalSubstance(dialog,callback){
+	var valid = $('#addOrUpdateRsChemicalSubstanceForm').validationEngine({
+		returnIsValid : true
+	});
+
+	if(valid){
+		var params = {
+		     id: $("#id").val(),
+		     chemicalSubstanceName: $("#chemicalSubstanceName").val(),
+		     englishName: $("#englishName").val(),
+		     molecularFormula: $("#molecularFormula").val(),
+		     molecularWeight: $("#molecularWeight").val(),
+		     meltingPoint: $("#meltingPoint").val(),
+		     boilingPoint: $("#boilingPoint").val(),
+		     relativeDensity: $("#relativeDensity").val(),
+		     vapourPressure: $("#vapourPressure").val(),
+		     casNum: $("#casNum").val(),
+		     physicalClassification: $("#physicalClassification").val(),
+		     physicalState: $("#physicalState").val(),
+		     appearance: $("#appearance").val(),
+		     solubility: $("#solubility").val(),
+		     tabooObject: $("#tabooObject").val(),
+		     storageVessel: $("#storageVessel").val(),
+		     storageMode: $("#storageMode").val(),
+		     purpose: $("#purpose").val(),
+		     designScore: $("#designScore").val(),
+		     maxScore: $("#maxScore").val(),
+		     actualScore: $("#actualScore").val(),
+		     stabilityAndRisk: $("#stabilityAndRisk").val(),
+		     environmentalImpact: $("#environmentalImpact").val(),
+		     securityMeasure: $("#securityMeasure").val(),
+		     emergHandleMethod: $("#emergHandleMethod").val(),
+		     riskUnitCode: $("#riskUnitCode").val(),
+		     riskUnitName: $("#riskUnitName").val(),
+		     createTime: $("#createTime").val(),
+		     versionTime: $("#versionTime").val(),
+		     status: $("#status").val()
+		};
+		var requestUrl = "/cgi/emergsys/rs/rschemicalsubstance/add";
+		if(id != ""){ 
+			requestUrl = "/cgi/emergsys/rs/rschemicalsubstance/mod";
+		    params.id = id;
+		}
+
+		$.ajax({
+			url : requestUrl,
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			type : "post",
+			data : JSON.stringify(params),
+			cache : false,
+			success : function(data) {
+				if (data.status == "1") {
+					parent.Dialog.alert("操作成功！", function(){
+						callback();
+						dialog.close();
+					});
+				}else{
+					Dialog.alert(data.msg);
+				}
+			}
+		});
+	}
+}
+
+
+
+</script>
+</head>
+<body>
+ <form action="" id='addOrUpateRsChemicalSubstanceForm'>
+	<table class="form-table single">
+
+			<tr>
+			    <th><span class="star">*</span>化学物质名称：</th>
+				<td><input type="text" id="chemicalSubstanceName" name="chemicalSubstanceName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>英文名：</th>
+				<td><input type="text" id="englishName" name="englishName" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>分子式：</th>
+				<td><input type="text" id="molecularFormula" name="molecularFormula" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>分子量：</th>
+				<td><input type="text" id="molecularWeight" name="molecularWeight" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>熔点：</th>
+				<td><input type="text" id="meltingPoint" name="meltingPoint" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>沸点：</th>
+				<td><input type="text" id="boilingPoint" name="boilingPoint" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>相对密度：</th>
+				<td><input type="text" id="relativeDensity" name="relativeDensity" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>蒸气压：</th>
+				<td><input type="text" id="vapourPressure" name="vapourPressure" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>CAS号：</th>
+				<td><input type="text" id="casNum" name="casNum" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>物理分类：</th>
+				<td><input type="text" id="physicalClassification" name="physicalClassification" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>物理状态：</th>
+				<td><input type="text" id="physicalState" name="physicalState" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>外观形状：</th>
+				<td><input type="text" id="appearance" name="appearance" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>溶解性：</th>
+				<td><input type="text" id="solubility" name="solubility" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>禁忌物：</th>
+				<td><input type="text" id="tabooObject" name="tabooObject" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>存储容器：</th>
+				<td><input type="text" id="storageVessel" name="storageVessel" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>存储方式：</th>
+				<td><input type="text" id="storageMode" name="storageMode" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>化学品用途：</th>
+				<td><input type="text" id="purpose" name="purpose" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>设计最大存储量：</th>
+				<td><input type="text" id="designScore" name="designScore" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>临界量：</th>
+				<td><input type="text" id="maxScore" name="maxScore" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>现存量：</th>
+				<td><input type="text" id="actualScore" name="actualScore" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>稳定性和危险性：</th>
+				<td><input type="text" id="stabilityAndRisk" name="stabilityAndRisk" class="input validate[required,length[0,500]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>对环境的影响：</th>
+				<td><input type="text" id="environmentalImpact" name="environmentalImpact" class="input validate[required,length[0,500]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>安全防护措施：</th>
+				<td><input type="text" id="securityMeasure" name="securityMeasure" class="input validate[required,length[0,500]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>应急处理处置方法：</th>
+				<td><input type="text" id="emergHandleMethod" name="emergHandleMethod" class="input validate[required,length[0,500]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险单元编码：</th>
+				<td><input type="text" id="riskUnitCode" name="riskUnitCode" class="input validate[required,length[0,32]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险单元名称：</th>
+				<td><input type="text" id="riskUnitName" name="riskUnitName" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+	</table>
+ </form>
+</body>
+</html>

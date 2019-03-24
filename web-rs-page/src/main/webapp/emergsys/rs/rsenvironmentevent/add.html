@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新增环境事件记录</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+
+<!-- 公司自定义的css及js start -->
+<link rel="stylesheet" type="text/css" href="/static/pcweb/common/css/core.css">
+<script type="text/javascript" src="/static/pcweb/common/js/uc-ui.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<!-- 公司自定义的css及js end -->
+
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<!-- 异步上传控件start -->
+<script type="text/javascript" src="/static/pcweb/common/js/CGIConfig.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/UUIDUtil.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/libs/js/form/upload/fileUpload.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/libs/js/form/upload/handlers.js"></script>
+<!-- 异步上传控件end -->
+
+<script src="/static/pcweb/emergsys/eventmgt/selectpage/selectCommon.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var id = parent.parentRsEnvironmentEventId;
+
+function initComplete(){
+    dict.initSelectList("RS_ENV_EVENT_TYPE","eventTypeCode");
+    dict.initSelectList("EMERG_EVENT_DEGREE","eventLevelCode");
+    if(id != ""){
+		loadRsEnvironmentEventDetails();
+	}else{
+        initUpload();
+    }
+}
+
+function loadRsEnvironmentEventDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rsenvironmentevent/get", 
+		dataType : "json",
+		contentType : "application/json; charset=utf-8", 
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") {
+				if(data.data) {
+					var obj = data.data;
+                   $("table input,table textarea").each(function(){
+                        var value = obj[$(this).attr('id')];
+                       if(value == "eventLevelCode" || value == "eventTypeCode"){
+                           return;
+                       }
+					   $(this).val(value == 'null' || value == null ? '' : value);
+                    });
+                    $("#eventTime").val(dateTimeFormatter(obj.eventTime, "yyyy-MM-dd") + "");
+                }
+                initUpload();
+                $("#eventLevelCode").setValue(obj.eventLevelCode);
+                $("#eventLevelCode").render();
+                $("#eventTypeCode").setValue(obj.eventTypeCode);
+                $("#eventTypeCode").render();
+            }else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+		}
+	}); 
+}
+
+
+function addOrUpateRsEnvironmentEvent(dialog,callback){
+	var valid = $('#addOrUpdateRsEnvironmentEventForm').validationEngine({
+		returnIsValid : true
+	});
+
+	if(valid){
+		var params = {
+		     id: $("#id").val(),
+		     eventName: $("#eventName").val(),
+		     eventTypeCode: $("#eventTypeCode").val(),
+		     eventTypeName: $("#eventTypeCode").attr('relText'),
+		     eventTime: $("#eventTime").val(),
+		     eventAddress: $("#eventAddress").val(),
+		     eventRiskSource: $("#eventRiskSource").val(),
+		     eventPollution: $("#eventPollution").val(),
+		     emergPlanCode: $("#emergPlanCode").val(),
+		     emergPlanName: $("#emergPlanName").val(),
+		     eventLevelCode: $("#eventLevelCode").val(),
+		     eventLevelName: $("#eventLevelCode").attr('relText'),
+		     eventCause: $("#eventCause").val(),
+		     eventDetail: $("#eventDetail").val(),
+		     catalogId: $("#catalogId").val(),
+		     createTime: $("#createTime").val(),
+		     versionTime: $("#versionTime").val(),
+		     status: $("#status").val()
+		};
+		var requestUrl = "/cgi/emergsys/rs/rsenvironmentevent/add";
+		if(id != ""){ 
+			requestUrl = "/cgi/emergsys/rs/rsenvironmentevent/mod";
+		    params.id = id;
+		}
+
+		$.ajax({
+			url : requestUrl,
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			type : "post",
+			data : JSON.stringify(params),
+			cache : false,
+			success : function(data) {
+				if (data.status == "1") {
+					parent.Dialog.alert("操作成功！", function(){
+						callback();
+						dialog.close();
+					});
+				}else{
+					Dialog.alert(data.msg);
+				}
+			}
+		});
+	}
+}
+
+/**
+ * 加载附件
+ */
+function initUpload() {
+    var catalogId = $("#catalogId").val();
+    if (catalogId == "" || catalogId == null) {
+        catalogId = UUIDUtil.getUUID().id;
+        $("#catalogId").val(catalogId);
+    }
+    //初始化上传控件
+    $.fileUpload.start({
+        contextPath : "/static/pcweb/common/libs/qui/3.3/",
+        buttonContainer : "uploadFile",
+        fileListContainer : "uploadFileList",
+        deleteContainer : "uploadDeleteAll",
+        moduleId : 'poll_base_productionEquipment',
+        catalogId : catalogId,
+        kind : 'template',
+        uploadUrl : "/cgi/bp/filemgt/fileupload/upload",
+        deleteUrl : "/cgi/bp/filemgt/special/delByFileIdWithQui?fileId=",
+        downloadUrl : "/cgi/bp/filemgt/special/download?fileId=",
+        deleteAllUrl : "/cgi/bp/filemgt/fileupload/delByCatalogId",
+        listUrl : "/cgi/bp/filemgt/special/getByCatalogIdWithQui",
+        fileNameWidth : 240,
+        fileSize : "307200",
+        editMode : true
+    });
+}
+
+
+</script>
+</head>
+<body>
+ <form action="" id='addOrUpateRsEnvironmentEventForm'>
+	<table class="form-table single">
+
+			<tr>
+			    <th><span class="star">*</span>环境事件名称：</th>
+				<td><input type="text" id="eventName" name="eventName" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事件类型：</th>
+				<td>
+					<select id="eventTypeCode" name="eventTypeCode" prompt="请选择"
+							class="select validate[required]"></select>
+				</td>
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事件发生时间：</th>
+				<td><input type="text" class="date input-time-split" id="eventTime" name="eventTime" readOnly="readOnly" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事件发生地点：</th>
+				<td><input type="text" id="eventAddress" name="eventAddress" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事故风险源：</th>
+				<td><input type="text" id="eventRiskSource" name="eventRiskSource" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事故污染物：</th>
+				<td><input type="text" id="eventPollution" name="eventPollution" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>应急预案编号：</th>
+				<td><input type="text" id="emergPlanCode" name="emergPlanCode" class="input validate[required,length[0,32]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>应急预案名称：</th>
+				<td><input type="text" id="emergPlanName" name="emergPlanName" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事件分级：</th>
+				<td>
+					<select id="eventLevelCode" name="eventLevelCode" prompt="请选择"
+							class="select validate[required]"></select>
+				</td>
+					
+			</tr>  
+
+			<tr>
+			    <th><span class="star">*</span>事件原因：</th>
+				<td><input type="text" id="eventCause" name="eventCause" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>事件详情：</th>
+				<td><input type="text" id="eventDetail" name="eventDetail" class="input validate[required,length[0,1000]]" /></td>	
+					
+			</tr>
+
+			<input type="hidden" name="catalogId" id="catalogId" value="" />
+			<tr>
+				<th>附件 ：</th>
+				<td colspan="3">
+					<span id="uploadFile"></span>&nbsp;&nbsp;
+					<span id="uploadFileList"></span>
+				</td>
+			</tr>
+		
+	</table>
+ </form>
+</body>
+</html>

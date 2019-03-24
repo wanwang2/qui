@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新增水环境及保护目标</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<!-- 异步上传控件start -->
+<script type="text/javascript" src="/static/pcweb/common/js/CGIConfig.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/UUIDUtil.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/libs/js/form/upload/fileUpload.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/libs/js/form/upload/handlers.js"></script>
+<!-- 异步上传控件end -->
+
+<script src="/static/pcweb/emergsys/eventmgt/selectpage/selectCommon.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var id = parent.parentRsWaterEnvId;
+
+function initComplete(){
+	if(id != ""){
+		loadRsWaterEnvDetails();
+	}else{
+        initUpload();
+	}
+}
+
+function loadRsWaterEnvDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rswaterenv/get", 
+		dataType : "json",
+		contentType : "application/json; charset=utf-8", 
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") {
+				if(data.data) {
+					var obj = data.data;
+                   $("table input,table textarea").each(function(){
+                        var value = obj[$(this).attr('id')];
+                        $(this).val(value == 'null' || value == null ? '' : value);
+                    });
+					$("#rswaterenvStatus").setValue(data.data.state);
+					$("#rswaterenvStatus").render();
+				}
+                initUpload();
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+		}
+	}); 
+}
+
+
+function addOrUpateRsWaterEnv(dialog,callback){
+	var valid = $('#addOrUpdateRsWaterEnvForm').validationEngine({
+		returnIsValid : true
+	});
+
+	if(valid){
+		var params = {
+		     id: $("#id").val(),
+		     pollId: $("#pollId").val(),
+		     wwDirectionTypeCode: $("#wwDirectionTypeCode").val(),
+		     wwDirectionTypeName: $("#wwDirectionTypeName").val(),
+		     wwReceivingWaterName: $("#wwReceivingWaterName").val(),
+		     wwReceivingWaterCcode: $("#wwReceivingWaterCcode").val(),
+		     functionalCategoryCode: $("#functionalCategoryCode").val(),
+		     functionalCategoryName: $("#functionalCategoryName").val(),
+		     rwDistance: $("#rwDistance").val(),
+		     wwHydrologicalParameters: $("#wwHydrologicalParameters").val(),
+		     cwDirectionTypeCode: $("#cwDirectionTypeCode").val(),
+		     cwDirectionTypeName: $("#cwDirectionTypeName").val(),
+		     cwHydrologicalParameters2: $("#cwHydrologicalParameters2").val(),
+		     protectedTargetName: $("#protectedTargetName").val(),
+		     protectedTargetSize: $("#protectedTargetSize").val(),
+		     protectLevelCode: $("#protectLevelCode").val(),
+		     protectLevelName: $("#protectLevelName").val(),
+		     longitude: $("#longitude").val(),
+		     latitude: $("#latitude").val(),
+		     locationAndDirection: $("#locationAndDirection").val(),
+		     distance: $("#distance").val(),
+		     environmentFunction: $("#environmentFunction").val(),
+		     serviceArea: $("#serviceArea").val(),
+		     dutyPerson: $("#dutyPerson").val(),
+		     dutyPersonTel: $("#dutyPersonTel").val(),
+		     catalogId: $("#catalogId").val(),
+		     createTime: $("#createTime").val(),
+		     versionTime: $("#versionTime").val(),
+		     status: $("#status").val()
+		};
+		var requestUrl = "/cgi/emergsys/rs/rswaterenv/add";
+		if(id != ""){ 
+			requestUrl = "/cgi/emergsys/rs/rswaterenv/mod";
+		    params.id = id;
+		}
+
+		$.ajax({
+			url : requestUrl,
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			type : "post",
+			data : JSON.stringify(params),
+			cache : false,
+			success : function(data) {
+				if (data.status == "1") {
+					parent.Dialog.alert("操作成功！", function(){
+						callback();
+						dialog.close();
+					});
+				}else{
+					Dialog.alert(data.msg);
+				}
+			}
+		});
+	}
+}
+
+/**
+ * 加载附件
+ */
+function initUpload() {
+    var catalogId = $("#catalogId").val();
+    if (catalogId == "" || catalogId == null) {
+        catalogId = UUIDUtil.getUUID().id;
+        $("#catalogId").val(catalogId);
+    }
+    //初始化上传控件
+    $.fileUpload.start({
+        contextPath : "/static/pcweb/common/libs/qui/3.3/",
+        buttonContainer : "uploadFile",
+        fileListContainer : "uploadFileList",
+        deleteContainer : "uploadDeleteAll",
+        moduleId : 'poll_base_productionEquipment',
+        catalogId : catalogId,
+        kind : 'template',
+        uploadUrl : "/cgi/bp/filemgt/fileupload/upload",
+        deleteUrl : "/cgi/bp/filemgt/special/delByFileIdWithQui?fileId=",
+        downloadUrl : "/cgi/bp/filemgt/special/download?fileId=",
+        deleteAllUrl : "/cgi/bp/filemgt/fileupload/delByCatalogId",
+        listUrl : "/cgi/bp/filemgt/special/getByCatalogIdWithQui",
+        fileNameWidth : 240,
+        fileSize : "307200",
+        editMode : true
+    });
+}
+
+</script>
+</head>
+<body>
+ <form action="" id='addOrUpateRsWaterEnvForm'>
+	<table class="form-table single">
+
+			<tr>
+				<th><span class="star">*</span>企业名称：</th>
+				<td>
+					<input type="hidden" id="enterpriseId" name="enterpriseId" class="input validate[required,length[0,255]]" />
+					<input class="input-operable validate[required]" type="text" name="enterpriseName"  readonly="readonly" id="enterpriseName" value="" />
+					<input type="button" class="small-btn"  id="pointbtn" value="选" onclick="onCheckEnterprise()"/>
+					<input type="button" class="small-btn" id="clearPoint" value="清" onclick='onClearSelected("enterpriseId","enterpriseName")'/>
+				</td>
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水主要排水去向类型：</th>
+				<td><input type="text" id="wwDirectionTypeCode" name="wwDirectionTypeCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水主要排水去向类型：</th>
+				<td><input type="text" id="wwDirectionTypeName" name="wwDirectionTypeName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水受纳水体名称：</th>
+				<td><input type="text" id="wwReceivingWaterName" name="wwReceivingWaterName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水受纳水体代码：</th>
+				<td><input type="text" id="wwReceivingWaterCcode" name="wwReceivingWaterCcode" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水受纳水体功能类别：</th>
+				<td><input type="text" id="functionalCategoryCode" name="functionalCategoryCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水受纳水体功能类别：</th>
+				<td><input type="text" id="functionalCategoryName" name="functionalCategoryName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水受纳水体距企业距离：</th>
+				<td><input type="text" id="rwDistance" name="rwDistance" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>废水受纳水体水文参数：</th>
+				<td><input type="text" id="wwHydrologicalParameters" name="wwHydrologicalParameters" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>清净下水主要排水去向类型：</th>
+				<td><input type="text" id="cwDirectionTypeCode" name="cwDirectionTypeCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>清净下水主要排水去向类型：</th>
+				<td><input type="text" id="cwDirectionTypeName" name="cwDirectionTypeName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>清净下水受纳水体水文参数：</th>
+				<td><input type="text" id="cwHydrologicalParameters2" name="cwHydrologicalParameters2" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>水环境保护目标名称：</th>
+				<td><input type="text" id="protectedTargetName" name="protectedTargetName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>保护目标的规模大小：</th>
+				<td><input type="text" id="protectedTargetSize" name="protectedTargetSize" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>保护目标的保护级别：</th>
+				<td><input type="text" id="protectLevelCode" name="protectLevelCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>保护目标的保护级别：</th>
+				<td><input type="text" id="protectLevelName" name="protectLevelName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>经度：</th>
+				<td><input type="text" id="longitude" name="longitude" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>纬度：</th>
+				<td><input type="text" id="latitude" name="latitude" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>相对企业位置方位：</th>
+				<td><input type="text" id="locationAndDirection" name="locationAndDirection" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>距企业距离（米）：</th>
+				<td><input type="text" id="distance" name="distance" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>所属环境功能：</th>
+				<td><input type="text" id="environmentFunction" name="environmentFunction" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>服务范围：</th>
+				<td><input type="text" id="serviceArea" name="serviceArea" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>联系人：</th>
+				<td><input type="text" id="dutyPerson" name="dutyPerson" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>联系电话：</th>
+				<td><input type="text" id="dutyPersonTel" name="dutyPersonTel" class="input validate[required,length[0,11]]" /></td>	
+					
+			</tr>
+
+			<input type="hidden" name="catalogId" id="catalogId" value="" />
+			<tr>
+				<th>附件 ：</th>
+				<td colspan="3">
+					<span id="uploadFile"></span>&nbsp;&nbsp;
+					<span id="uploadFileList"></span>
+				</td>
+			</tr>
+		
+	</table>
+ </form>
+</body>
+</html>

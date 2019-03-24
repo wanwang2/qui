@@ -1,0 +1,1074 @@
+{
+    "ui": {
+        "theme": "darkblue",
+        "render": [
+            "canvas",
+            "webgl"
+        ],
+        "layerrenderMode": "vector",
+        "city": {
+            "adcode": "510500000000",
+            "level": "2"
+        },
+        "map": {
+            "options": {
+                "maxExtent": [
+                    105.26685874280943, 
+                    28.859334541788606, 
+                    105.73551604132899, 
+                    29.047253489207247
+                ],
+                "initExtent": [
+                    105.26685874280943, 
+                    28.859334541788606, 
+                    105.73551604132899, 
+                    29.047253489207247
+                ],
+                "minZoom": 9,
+                "maxZoom": 16,
+                "epsg": "EPSG:3857"
+            },
+            "baseLayer": [
+                {
+                    "source": "arciis",
+                    "type": "tiled",
+                    "url": "/upmap/uptilemap/lzgeoq",
+                    "lable": "行政图",
+                    "projection": "3857",
+                    "icon": "/upmap/static/images/vec-icon.png",
+                    "id": "image_layer",
+                    "visible": true
+                }
+            ],
+            "businessLayer": [
+                {}
+            ],
+            "popupPosition": ""
+        },
+        "widgets": [            
+            {
+                "controlTag": "problem-area-widget",
+                "placement": "none"
+            },
+            {
+                "controlTag": "up-search",
+                "placement": "left-top",
+                "useThumbnail": true,
+                "styleBase": {
+                    "fill": {
+                        "color": "#D4F2FA"
+                    },
+                    "stroke": {
+                        "color": "#FE1D1C",
+                        "width": 2
+                    },
+                    "image": {
+                        "crossOrigin": "anonymous",
+                        "size": [
+                            32,
+                            32
+                        ],
+                        "anchor": [
+                            0.5,
+                            1
+                        ],
+                        "scale": 1,
+                        "src": "/upmap/static/images/map-red.png"
+                    },
+                    "text": {
+                        "field": "__index__",
+                        "fill": {
+                            "color": "#fff"
+                        },
+                        "font": "14px Calibri,sans-serif",
+                        "textAlign": "center",
+                        "textBaseline": "top",
+                        "offsetY": -28
+                    }
+                },
+                "styleSelected": {
+                    "fill": {
+                        "color": "#C78F8F"
+                    },
+                    "stroke": {
+                        "color": "#979790",
+                        "width": 2
+                    },
+                    "image": {
+                        "crossOrigin": "anonymous",
+                        "size": [
+                            32,
+                            32
+                        ],
+                        "anchor": [
+                            0.5,
+                            1
+                        ],
+                        "scale": 1,
+                        "src": "/upmap/static/images/map-blue.png"
+                    },
+                    "text": {
+                        "field": "__index__",
+                        "fill": {
+                            "color": "#fff"
+                        },
+                        "font": "14px Calibri,sans-serif",
+                        "textAlign": "center",
+                        "textBaseline": "top",
+                        "offsetY": -28
+                    }
+                }
+            },
+            {
+                "controlTag": "up-measure",
+                "placement": "right-top"
+            },
+            {
+                "controlTag": "up-zone-location",
+                "placement": "right-top"
+            },
+            {
+                "controlTag": "up-home",
+                "placement": "right-bottom"
+            },
+            {
+                "controlTag": "up-zoom",
+                "placement": "right-bottom",
+                "style": "margin-top: 8px;"
+            },
+            {
+                "controlTag": "up-scale",
+                "placement": "left-bottom"
+            },
+            {
+                "controlTag": "up-overview-map",
+                "placement": "right-top"
+            },
+            {
+                "controlTag": "up-legend",
+                "placement": "none",
+                "style": "right:130px;bottom:20px;position:absolute;"
+            },
+            {
+                "controlTag": "up-map-type",
+                "placement": "none",
+                "style": "right:10px;bottom:10px;position:absolute;"
+            },
+            {
+                "controlTag": "up-title-window",
+                "placement": "none"
+            },
+            {
+                "controlTag": "up-full-screen",
+                "placement": "right-top",
+                "el": "app"
+            },
+            {
+                "controlTag": "up-info-window",
+                "placement": "none"
+            },
+            {
+                "controlTag": "up-resources-tree",
+                "placement": "right-top",
+                "option": [
+                    {
+                        "id": 2,
+                        "label": "污染源",
+                        "children": [
+                            {
+                                "id": 2001,
+                                "label": "工业企业",
+                                "icon": "/upmap/static/images/toolbar/gyyq.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/gyyq.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/gyyq2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1000"
+                            },
+                            {
+                                "id": 2002,
+                                "label": "污水处理厂",
+                                "icon": "/upmap/static/images/toolbar/wscl.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/wscl.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/wscl2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1001"
+                            },
+                            {
+                                "id": 2003,
+                                "label": "畜禽养殖",
+                                "icon": "/upmap/static/images/toolbar/xqyz.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/xqyz.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/xqyz2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1002"
+                            },
+                            {
+                                "id": 2004,
+                                "label": "餐饮业",
+                                "icon": "/upmap/static/images/toolbar/cy.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/cy.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/cy2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1003"
+                            },
+                            {
+                                "id": 2005,
+                                "label": "医疗卫生机构",
+                                "icon": "/upmap/static/images/toolbar/ylwsjg.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/ylwsjg.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/ylwsjg2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1004"
+                            },
+                            {
+                                "id": 2006,
+                                "label": "垃圾处置点",
+                                "icon": "/upmap/static/images/toolbar/ljczd.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/ljczd.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/ljczd2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1005"
+                            },
+                            {
+                                "id": 2007,
+                                "label": "建筑工地",
+                                "icon": "/upmap/static/images/toolbar/jzgd.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/jzgd.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/jzgd2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1006"
+                            },
+                            {
+                                "id": 2008,
+                                "label": "饮用水源地",
+                                "icon": "/upmap/static/images/toolbar/syd.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/syd.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/syd2.png"
+                                    }
+                                },
+                                "params": "origin:psms && pollute_pollute_type:1007"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 3,
+                        "label": "敏感点",
+                        "children": [
+                            {
+                                "id": 3001,
+                                "label": "医院",
+                                "icon": "/upmap/static/images/toolbar/yy.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/yy.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/yy2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:25"
+                            },
+                            {
+                                "id": 3002,
+                                "label": "学校",
+                                "icon": "/upmap/static/images/toolbar/xx.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/xx.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/xx2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:26"
+                            },
+                            {
+                                "id": 3003,
+                                "label": "风景名胜区",
+                                "icon": "/upmap/static/images/toolbar/fjmsq.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/fjmsq.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/fjmsq2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:24"
+                            },
+                            {
+                                "id": 3004,
+                                "label": "水源地",
+                                "icon": "/upmap/static/images/toolbar/syd.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/syd.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/syd2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:31"
+                            },
+                            {
+                                "id": 3005,
+                                "label": "商场",
+                                "icon": "/upmap/static/images/toolbar/sc.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/sc.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/sc2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:28"
+                            },
+                            {
+                                "id": 3006,
+                                "label": "宾馆酒店",
+                                "icon": "/upmap/static/images/toolbar/bgjd.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/bgjd.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/bgjd2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:30"
+                            },
+                            {
+                                "id": 3008,
+                                "label": "文物保护",
+                                "icon": "/upmap/static/images/toolbar/syd.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/syd.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/syd2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:34"
+                            },
+                            {
+                                "id": 3009,
+                                "label": "住宅区",
+                                "icon": "/upmap/static/images/toolbar/xq.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/xq.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/xq2.png"
+                                    }
+                                },
+                                "params": "origin:mgd && mgd_data_type:29"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 4,
+                        "label": "监管点",
+                        "children": [
+                            {
+                                "id": 4001,
+                                "label": "治理设施",
+                                "children": [
+                                    {
+                                        "id": 400101,
+                                        "label": "废水治理设施",
+                                        "icon": "/upmap/static/images/toolbar/fszlss.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fszlss.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fszlss2.png"
+                                            }
+                                        },
+                                        "params": "origin:treatment && treatment_facilities_type_code:100"
+                                    },
+                                    {
+                                        "id": 400102,
+                                        "label": "废气治理设施",
+                                        "icon": "/upmap/static/images/toolbar/fqzlss.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fqzlss.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fqzlss2.png"
+                                            }
+                                        },
+                                        "params": "origin:treatment && treatment_facilities_type_code:101"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 4002,
+                                "label": "排污口",
+                                "children": [
+                                    {
+                                        "id": 400201,
+                                        "label": "废水排口",
+                                        "icon": "/upmap/static/images/toolbar/fspk.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fspk.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fspk2.png"
+                                            }
+                                        },
+                                        "params": "origin:water_outlet"
+                                    },
+                                    {
+                                        "id": 400202,
+                                        "label": "废气排口",
+                                        "icon": "/upmap/static/images/toolbar/fqpk.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fqpk.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/fqpk2.png"
+                                            }
+                                        },
+                                        "params": "origin:gas_outlet"
+                                    },
+                                    {
+                                        "id": 400203,
+                                        "label": "噪声排口",
+                                        "icon": "/upmap/static/images/toolbar/zspk.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/zspk.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/zspk2.png"
+                                            }
+                                        },
+                                        "params": "origin:noise_outlet"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 4003,
+                                "label": "存储设施",
+                                "children": [
+                                    {
+                                        "id": 400301,
+                                        "label": "固废存储",
+                                        "icon": "/upmap/static/images/toolbar/gf.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/gf.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/gf2.png"
+                                            }
+                                        },
+                                        "params": "origin:solid && solid_equipment_type_code:300"
+                                    },
+                                    {
+                                        "id": 400302,
+                                        "label": "危废存储",
+                                        "icon": "/upmap/static/images/toolbar/wfdy.png",
+                                        "styleBase": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/wfdy.png"
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "image": {
+                                                "src": "/upmap/static/images/toolbar/wfdy2.png"
+                                            }
+                                        },
+                                        "params": "origin:solid && solid_equipment_type_code:301"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 7,
+                        "label": "物联设备",
+                        "children": [
+                            {
+                                "id": 7001,
+                                "label": "视频监控",
+                                "icon": "/upmap/static/images/toolbar/spjk.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/spjk.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/spjk2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1000"
+                            },
+                            {
+                                "id": 7002,
+                                "label": "在线监测",
+                                "icon": "/upmap/static/images/toolbar/zxjc.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/zxjc.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/zxjc2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1001"
+                            },
+                            {
+                                "id": 7003,
+                                "label": "电子标签",
+                                "icon": "/upmap/static/images/toolbar/dzbq.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/dzbq.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/dzbq2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1003"
+                            },
+                            {
+                                "id": 7004,
+                                "label": "数采仪",
+                                "icon": "/upmap/static/images/toolbar/scy.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/scy.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/scy2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1004"
+                            },
+                            {
+                                "id": 7005,
+                                "label": "废水工况监控",
+                                "icon": "/upmap/static/images/toolbar/fsgkjk.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/fsgkjk.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/fsgkjk2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1005"
+                            },
+                            {
+                                "id": 7006,
+                                "label": "废气工况监控",
+                                "icon": "/upmap/static/images/toolbar/fqgkjk.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/fqgkjk.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/fqgkjk2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1006"
+                            },
+                            {
+                                "id": 7007,
+                                "label": "生产线监控",
+                                "icon": "/upmap/static/images/toolbar/sczxjk.png",
+                                "styleBase": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/sczxjk.png"
+                                    }
+                                },
+                                "styleSelected": {
+                                    "image": {
+                                        "src": "/upmap/static/images/toolbar/sczxjk2.png"
+                                    }
+                                },
+                                "params": "origin:iotdms && iotdms_device_type_code:1007"
+                            }
+                        ]
+                    },
+                    {
+                        "id": 5,
+                        "label": "厂区平面图",
+                        "children": [
+                            {
+                                "id": 5001,
+                                "label": "厂区边界",
+                                "icon": "/upmap/static/images/toolbar/cqbj.png",
+                                "params": "origin:pmt && pmt_data_type:1001",
+                                "styleBase": {
+                                    "type": "polygon",
+                                    "fill": {
+                                        "color": "#E2FAD4"
+                                    },
+                                    "stroke": {
+                                        "color": "#FE1D1C",
+                                        "width": 1
+                                    },
+                                    "text": {
+                                        "field": "name",
+                                        "fill": {
+                                            "color": "#000"
+                                        },
+                                        "font": "16px Calibri,sans-serif",
+                                        "textAlign": "center",
+                                        "textBaseline": "top",
+                                        "offsetY": 0,
+                                        "offsetX": 0,
+                                        "stroke": {
+                                            "color": "#fff",
+                                            "width": 2
+                                        }
+                                    }
+                                },
+                                "zIndex": 100,
+                                "styleSelected": {
+                                    "fill": {
+                                        "color": "#D4F2FA"
+                                    },
+                                    "stroke": {
+                                        "color": "#FE1D1C",
+                                        "width": 2
+                                    },
+                                    "text": {
+                                        "field": "name",
+                                        "fill": {
+                                            "color": "#000"
+                                        },
+                                        "font": "16px Calibri,sans-serif",
+                                        "textAlign": "center",
+                                        "textBaseline": "top",
+                                        "offsetY": 0,
+                                        "offsetX": 0,
+                                        "stroke": {
+                                            "color": "#fff",
+                                            "width": 2
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "id": 5002,
+                                "label": "生产车间",
+                                "icon": "/upmap/static/images/toolbar/sccj.png",
+                                "params": "origin:pmt && pmt_jzwlxbm:0602",
+                                "zIndex": 101,
+                                "styleBase": {
+                                    "fill": {
+                                        "color": "#F2D0CE"
+                                    },
+                                    "stroke": {
+                                        "color": "#979790",
+                                        "width": 1
+                                    },
+                                    "text": {
+                                        "field": "name",
+                                        "fill": {
+                                            "color": "#000"
+                                        },
+                                        "font": "16px Calibri,sans-serif",
+                                        "textAlign": "center",
+                                        "textBaseline": "top",
+                                        "offsetY": 0,
+                                        "offsetX": 0,
+                                        "stroke": {
+                                            "color": "#fff",
+                                            "width": 1
+                                        }
+                                    }
+                                },
+                                "styleSelected": {
+                                    "type": "polygon",
+                                    "fill": {
+                                        "color": "#C78F8F"
+                                    },
+                                    "stroke": {
+                                        "color": "#979790",
+                                        "width": 2
+                                    },
+                                    "text": {
+                                        "field": "name",
+                                        "fill": {
+                                            "color": "#000"
+                                        },
+                                        "font": "16px Calibri,sans-serif",
+                                        "textAlign": "center",
+                                        "textBaseline": "top",
+                                        "offsetY": 0,
+                                        "offsetX": 0,
+                                        "stroke": {
+                                            "color": "#fff",
+                                            "width": 2
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "id": 5003,
+                                "label": "管网",
+                                "children": [
+                                    {
+                                        "id": 500301,
+                                        "label": "雨水管网",
+                                        "icon": "/upmap/static/images/toolbar/yusgw.png",
+                                        "params": "origin:pmt && pmt_gwlx:雨水管网",
+                                        "zIndex": 301,
+                                        "styleBase": [
+                                            {
+                                                "stroke": {
+                                                    "color": "#1977FA",
+                                                    "width": 8
+                                                }
+                                            },
+                                            {
+                                                "stroke": {
+                                                    "color": "#68B1E2",
+                                                    "width": 8,
+                                                    "lineDash": [
+                                                        30,
+                                                        30
+                                                    ]
+                                                },
+                                                "lineAnimation": true
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 500302,
+                                        "label": "污水管网",
+                                        "icon": "/upmap/static/images/toolbar/wsgw.png",
+                                        "params": "origin:pmt && pmt_gwlx:污水管网",
+                                        "zIndex": 301,
+                                        "styleBase": [
+                                            {
+                                                "stroke": {
+                                                    "color": "#FA6F19",
+                                                    "width": 8
+                                                }
+                                            },
+                                            {
+                                                "stroke": {
+                                                    "color": "#FFC95E",
+                                                    "width": 8,
+                                                    "lineDash": [
+                                                        30,
+                                                        30
+                                                    ]
+                                                },
+                                                "lineAnimation": true
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 500303,
+                                        "label": "用水管网",
+                                        "icon": "/upmap/static/images/toolbar/ysgw.png",
+                                        "params": "origin:pmt && pmt_gwlx:用水管网",
+                                        "zIndex": 301,
+                                        "styleBase": [
+                                            {
+                                                "stroke": {
+                                                    "color": "#05A648",
+                                                    "width": 8
+                                                }
+                                            },
+                                            {
+                                                "stroke": {
+                                                    "color": "#86F08F",
+                                                    "width": 8,
+                                                    "lineDash": [
+                                                        30,
+                                                        30
+                                                    ]
+                                                },
+                                                "lineAnimation": true
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 6,
+                        "label": "生态红线数据",
+                        "children": [
+                            {
+                                "id": 1,
+                                "label": "行政区划",
+                                "params": "",
+                                "click": "tree_click",
+                                "children": [
+                                    {
+                                        "id": 1001,
+                                        "label": "经济区",
+                                        "zIndex": 101,
+                                        "params": "*",
+                                        "url": "/upmap/api/query/divisonInfo?code=510501*&levels=4",
+                                        "styleBase": {
+                                            "fill": {
+                                                "color": "#003F51"
+                                            },
+                                            "stroke": {
+                                                "color": "#1C818C",
+                                                "width": 1
+                                            },
+                                            "text": {
+                                                "field": "name",
+                                                "fill": {
+                                                    "color": "#fff"
+                                                },
+                                                "font": "16px Calibri,sans-serif",
+                                                "textAlign": "center",
+                                                "textBaseline": "top",
+                                                "offsetY": 0,
+                                                "offsetX": 0,
+                                                "stroke": {
+                                                    "color": "#fff",
+                                                    "width": 1
+                                                }
+                                            }
+                                        },
+                                        "styleSelected": {
+                                            "type": "polygon",
+                                            "fill": {
+                                                "color": "#C78F8F"
+                                            },
+                                            "stroke": {
+                                                "color": "#979790",
+                                                "width": 2
+                                            },
+                                            "text": {
+                                                "field": "name",
+                                                "fill": {
+                                                    "color": "#000"
+                                                },
+                                                "font": "16px Calibri,sans-serif",
+                                                "textAlign": "center",
+                                                "textBaseline": "top",
+                                                "offsetY": 0,
+                                                "offsetX": 0,
+                                                "stroke": {
+                                                    "color": "#fff",
+                                                    "width": 2
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": 10,
+                        "label": "规划图",
+                        "children": [
+                            {
+                                "id": 10001,
+                                "zIndex": 101,
+                                "label": "龙马潭规划图",
+                                "layer": "wms-layer",
+                                "opt": {
+                                    "url": "/upmap/geoserver/lzghtWorkspace/wms",
+                                    "layers": "lzghtWorkspace:ckqght"
+                                },
+                                "canInteractive": false,
+                                "visible": false
+                            }
+                        ]
+                    },
+                    {
+                        "id": 11,
+                        "label": "土壤"
+                    }
+                ]
+            }
+        ]
+    },
+    "template": {
+        "suggest": [
+            {
+                "title": "污染源",
+                "code": "污染源",
+                "img": "/upmap/static/images/search/wry.png"
+            },
+            {
+                "title": "敏感点",
+                "code": "敏感点",
+                "img": "/upmap/static/images/search/mgd.png"
+            }
+        ],
+        "list": {
+            "gis": "gis",
+            "psms": "psms",
+            "mgd": "mgd",
+            "division": "division"
+        },
+        "detial": {
+            "gis": {
+                "extBaseInfo": "",
+                "module": []
+            },
+            "division": {
+                "extBaseInfo": "",
+                "module": []
+            },
+            "psms": {
+                "extBaseInfo": "psms-detial",
+                "module": [
+                    {
+                        "name": "视频监控",
+                        "template": "pollute-spjk",
+                        "typecode": "1000"
+                    },
+                    {
+                        "name": "在线监测",
+                        "template": "pollute-zxjc",
+                        "typecode": "1001"
+                    },
+                    {
+                        "name": "工况监控",
+                        "template": "pollute-gkjk",
+                        "typecode": "1002"
+                    },
+                    {
+                        "name": "固危废",
+                        "template": "pollutes-gfw"
+                    },
+                    {
+                        "name": "排口",
+                        "template": "pollutes-pk"
+                    },
+                    {
+                        "name": "治理设施",
+                        "template": "pollutes-zlss"
+                    }
+                ]
+            },
+            "treatment": {
+                "extBaseInfo": "jgd-Zlss"
+            },
+            "event-info": {
+                "extBaseInfo": "up-event-info"
+            },
+            "water_outlet": {
+                "extBaseInfo": "jgd-pwk-water"
+            },
+            "gas_outlet": {
+                "extBaseInfo": "jgd-pwk-gas"
+            },
+            "noise_outlet": {
+                "extBaseInfo": "jgd-pwk-noise"
+            },
+            "solid": {
+                "extBaseInfo": "jgd-ccss"
+            }
+        }
+    }
+}

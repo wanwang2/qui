@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>EnterprsieRiskInfo列表</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/table/quiGrid.js"></script>
+<!--数据表格end-->
+
+<script type="text/javascript" src="/static/pcweb/common/js/pagation.js"></script>
+
+<!--箭头分页start-->
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/nav/pageNumber.js"></script>
+<!--箭头分页end-->
+
+<!--树组件与弹窗组件（这里引入只为“非iframe弹窗（复杂内容）”示例需要） -->
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/selectTree.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/tree/ztree/ztree.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/js/tree/ztree/ztree.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	var parentEnterprsieRiskInfoId = "";
+	//回车检索
+	function enterPress(){
+		document.onkeydown = function(e){
+		    var ev = document.all ? window.event : e;
+		    if(ev.keyCode==13) {
+		    	onSearch();
+		     }
+		}
+	}
+	//清除空格
+	function trimInput(){		
+		$(".input").blur(function(){
+			var obj=$(this);
+			var val=obj.val();
+			obj.val(val.replace(/^\s+|\s+$/g, ''));
+		});
+	}
+	
+	//展示EnterprsieRiskInfo列表数据
+	var grid = null;
+	function initGrid(data){
+		if (!data) {
+			data = {rows:[]};
+		}
+		grid = $("#dataBasic").quiGrid({
+		     columns:[
+		     	   { display: '风险属性', name: 'riskAttribute',  align: 'centre', width: "5%"},
+		     	   { display: '环境风险等级name', name: 'riskLevelName',  align: 'centre', width: "5%"},
+		     	   { display: '风险评估报告（有/无）', name: 'riskAssRewport',  align: 'centre', width: "5%"},
+		     	   { display: '风评报告备案(有备案/无备案)', name: 'isRecorded',  align: 'centre', width: "5%"},
+		     	   { display: '突发环境应急事件应急预案备案', name: 'sdEventPlan',  align: 'centre', width: "5%"},
+		     	   { display: '突发环境事件应急预案备案', name: 'sdPlRecord',  align: 'centre', width: "5%"},
+		     	   { display: '风险单元数', name: 'riskUnitNum',  align: 'centre', width: "5%"},
+		     	   { display: '主要风险物质', name: 'majorRiskMaterial',  align: 'centre', width: "5%"},
+		     	   { display: '应急负责人', name: 'emergManager',  align: 'centre', width: "5%"},
+		     	   { display: '应急负责人电话', name: 'tel',  align: 'centre', width: "5%"},
+		           { display: '操作', align: 'centre', width:"14%", minWidth:81,
+		        	 render: function(rowdata, rowindex, value, column){
+		        		   if(rowdata.isInner==1){
+		        			   var html =  '<div class="padding_top4 padding_left5">'
+		                           + '<span class="img_list hand" title="查看" onclick="toDetailEnterprsieRiskInfo(\''+rowdata.enterprsieriskinfoId+'\');"></span>'
+		                           + '</div>';   
+		    	        		   return html;
+		        		   }
+		        		   var html =  '<div class="padding_top4 padding_left5">'
+	                       + '<span class="img_list hand" title="查看" onclick="toDetailEnterprsieRiskInfo(\''+rowdata.id+'\');"></span>'
+	                       + '<span class="img_edit hand" title="修改" onclick="toUpdateEnterprsieRiskInfo(\''+rowdata.id+'\');"></span>' 
+	                       + '<span class="img_delete hand" title="删除" onclick="toDelEnterprsieRiskInfo(\''+rowdata.id+'\');"></span>'
+	                       + '</div>';
+		        		   return html; 
+		        	   }}],
+		     usePager : false,   
+		     enabledSort : false, 
+		     rowHeight:30,
+             headerRowHeight:40,
+		     height: '95%', 
+		     width:"100%", 
+		     //sortName: 'roleId',   
+		     data:data,
+		     rownumbers:true,
+		     checkbox : false,
+		     rownumbers : true,
+		     toolbar:{
+	 	     	items:[{text: '新增   ', click:toAddEnterprsieRiskInfo, iconClass: 'icon_add'}]
+		     }
+		 });
+	}
+	
+	//条件搜索
+	function getParam(){
+		var param = {
+		     id: $("#id").val(),
+		     enterpriseId: $("#enterpriseId").val(),
+		     riskAttribute: $("#riskAttribute").val(),
+		     riskLevelCode: $("#riskLevelCode").val(),
+		     riskLevelName: $("#riskLevelName").val(),
+		     riskAssRewport: $("#riskAssRewport").val(),
+		     isRecorded: $("#isRecorded").val(),
+		     sdEventPlan: $("#sdEventPlan").val(),
+		     sdPlRecord: $("#sdPlRecord").val(),
+		     riskUnitNum: $("#riskUnitNum").val(),
+		     majorRiskMaterial: $("#majorRiskMaterial").val(),
+		     emergManager: $("#emergManager").val(),
+		     tel: $("#tel").val(),
+		     catalogId: $("#catalogId").val(),
+		     createTime: $("#createTime").val(),
+		     versionTime: $("#versionTime").val(),
+		     status: $("#status").val()
+		}
+		return param;
+	}
+	
+	var dialog = null;
+	function toAddEnterprsieRiskInfo(){
+		parentEnterprsieRiskInfoId = "";
+		dialog = new Dialog();
+		dialog.Title = "新增EnterprsieRiskInfo";
+		dialog.URL = "add.html";
+		dialog.Width = 500;
+		dialog.Height = 500;
+		dialog.ShowButtonRow = true;
+		dialog.OKEvent = function(){
+			dialog.innerFrame.contentWindow.addOrUpateEnterprsieRiskInfo(dialog, onSearch);
+		};
+		dialog.show();
+	}
+	
+	function toUpdateEnterprsieRiskInfo(id){
+		parentEnterprsieRiskInfoId = id; 
+		dialog = new Dialog();
+		dialog.Title = "修改EnterprsieRiskInfo";
+		dialog.URL = "add.html";
+		dialog.Width = 500;
+		dialog.Height = 500; 
+		dialog.ShowButtonRow = true;
+		dialog.OKEvent = function(){
+			dialog.innerFrame.contentWindow.addOrUpateEnterprsieRiskInfo(dialog, onSearch);
+		};
+		dialog.show();
+	}
+	
+	function toDetailEnterprsieRiskInfo(id){
+		parentEnterprsieRiskInfoId = id; 
+		dialog = new Dialog();
+		dialog.Title = "EnterprsieRiskInfo详情";
+		dialog.URL = "detail.html";
+		dialog.Width = 650;
+		dialog.Height = 350;
+		dialog.ShowButtonRow = true;
+		dialog.ShowOkButton = false;
+		dialog.CancelButtonText="关闭";
+		dialog.show();
+	}
+	
+	function toDelEnterprsieRiskInfo(id){
+		Dialog.confirm("确认删除吗", function(){ 
+			$.ajax({
+				url : "/cgi/emergsys/rs/enterprsieriskinfo/del",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				type : "post",
+				data : JSON.stringify({id :id }),
+				cache : false,
+				success : function(data) {
+					Dialog.alert(data.msg, function(){
+						if (data.status == "1") {
+							loadData(); 
+						}
+					});
+				}
+			});
+			
+		});
+	}		
+	
+	function onSearch(){
+		grid.setNewPage(1);
+		loadData();//加载数据
+	}	
+	
+	function onReset(){
+		 $("#queryForm")[0].reset();
+		 $('#search').click();
+	}	
+		
+	function loadData() {
+		loadPagationData({
+			url : "/cgi/emergsys/rs/enterprsieriskinfo/page",
+			data : getParam(), 
+			grid : grid,
+			pageContent : "pageContent"
+		});
+	}
+	
+	function searchHandler() {
+		pageNo = 1;
+		pageSize = 10;
+		loadData();
+	}
+	
+	$(function(){
+		enterPress();
+		trimInput();
+		initGrid();
+		loadData();
+	});
+
+</script>
+</head>
+<body>
+	<div class="list-max">
+	  	<div class="box2 search-content folder" panelTitle="EnterprsieRiskInfo管理">
+			<div class="search-condition">
+				<form id="queryForm">
+					<table class="form-table search-table">
+						<tr>
+                         <th>id：</th>
+                            <td><input type="text" value="" id="id" name="id" class="input" /></td>
+                         <th>企业id：</th>
+                            <td><input type="text" value="" id="enterpriseId" name="enterpriseId" class="input" /></td>
+                         <th>风险属性：</th>
+                            <td><input type="text" value="" id="riskAttribute" name="riskAttribute" class="input" /></td>
+                         <th>环境风险等级code：</th>
+                            <td><input type="text" value="" id="riskLevelCode" name="riskLevelCode" class="input" /></td>
+                         <th>环境风险等级name：</th>
+                            <td><input type="text" value="" id="riskLevelName" name="riskLevelName" class="input" /></td>
+                         <th>风险评估报告（有/无）：</th>
+                            <td><input type="text" value="" id="riskAssRewport" name="riskAssRewport" class="input" /></td>
+                         <th>风评报告备案(有备案/无备案)：</th>
+                            <td><input type="text" value="" id="isRecorded" name="isRecorded" class="input" /></td>
+                         <th>突发环境应急事件应急预案备案：</th>
+                            <td><input type="text" value="" id="sdEventPlan" name="sdEventPlan" class="input" /></td>
+                         <th>突发环境事件应急预案备案：</th>
+                            <td><input type="text" value="" id="sdPlRecord" name="sdPlRecord" class="input" /></td>
+                         <th>风险单元数：</th>
+                            <td><input type="text" value="" id="riskUnitNum" name="riskUnitNum" class="input" /></td>
+                         <th>主要风险物质：</th>
+                            <td><input type="text" value="" id="majorRiskMaterial" name="majorRiskMaterial" class="input" /></td>
+                         <th>应急负责人：</th>
+                            <td><input type="text" value="" id="emergManager" name="emergManager" class="input" /></td>
+                         <th>应急负责人电话：</th>
+                            <td><input type="text" value="" id="tel" name="tel" class="input" /></td>
+                         <th>附件批次id：</th>
+                            <td><input type="text" value="" id="catalogId" name="catalogId" class="input" /></td>
+                         <th>版本时间：</th>
+                            <td><input type="text" value="" id="versionTime" name="versionTime" class="input" /></td>
+                         <th>状态：</th>
+                            <td><input type="text" value="" id="status" name="status" class="input" /></td>
+						</tr>
+					</table>
+				</form>				
+			</div>
+			<div class="search-button">
+				<button type="button" id="search" onclick="onSearch();">查询</button>
+				<button type="reset" onclick="onReset();">重置</button>
+			</div>
+	    </div>
+	    <div class="list-list">
+	        <div id="dataBasic"></div>
+			<div id="pageContent"></div>
+	    </div>
+	</div>
+</body>
+</html>

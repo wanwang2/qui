@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>环境事件记录列表</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/table/quiGrid.js"></script>
+<!--数据表格end-->
+
+<script type="text/javascript" src="/static/pcweb/common/js/pagation.js"></script>
+
+<!--箭头分页start-->
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/nav/pageNumber.js"></script>
+<!--箭头分页end-->
+
+<!--树组件与弹窗组件（这里引入只为“非iframe弹窗（复杂内容）”示例需要） -->
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/selectTree.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/tree/ztree/ztree.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/js/tree/ztree/ztree.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	var parentRsEnvironmentEventId = "";
+	//回车检索
+	function enterPress(){
+		document.onkeydown = function(e){
+		    var ev = document.all ? window.event : e;
+		    if(ev.keyCode==13) {
+		    	onSearch();
+		     }
+		}
+	}
+	//清除空格
+	function trimInput(){		
+		$(".input").blur(function(){
+			var obj=$(this);
+			var val=obj.val();
+			obj.val(val.replace(/^\s+|\s+$/g, ''));
+		});
+	}
+	
+	//展示RsEnvironmentEvent列表数据
+	var grid = null;
+	function initGrid(data){
+		if (!data) {
+			data = {rows:[]};
+		}
+		grid = $("#dataBasic").quiGrid({
+		     columns:[
+		     	   { display: '环境事件名称', name: 'eventName',  align: 'centre', width: "15%"},
+		     	   { display: '事件分级名称', name: 'eventLevelName',  align: 'centre', width: "15%"},
+		     	   { display: '应急预案名称', name: 'emergPlanName',  align: 'centre', width: "15%"},
+		     	   { display: '事件发生时间', name: 'eventTime',  align: 'centre', width: "15%",
+                       render : function(rowdata, rowindex, value, column) {
+                           if (value) {
+                               return dateTimeFormatter(value, "yyyy-MM-dd") + "";
+                           }
+                           return "-";
+                       }
+                   },
+		     	   { display: '事故风险源', name: 'eventRiskSource',  align: 'centre', width: "15%"},
+		     	   { display: '事故污染物', name: 'eventPollution',  align: 'centre', width: "15%"},
+		           { display: '操作', align: 'centre', width:"10%", minWidth:81,
+		        	 render: function(rowdata, rowindex, value, column){
+		        		   if(rowdata.isInner==1){
+		        			   var html =  '<div class="padding_top4 padding_left5">'
+		                           + '<span class="img_list hand" title="查看" onclick="toDetailRsEnvironmentEvent(\''+rowdata.rsenvironmenteventId+'\');"></span>'
+		                           + '</div>';   
+		    	        		   return html;
+		        		   }
+		        		   var html =  '<div class="padding_top4 padding_left5">'
+	                       + '<span class="img_list hand" title="查看" onclick="toDetailRsEnvironmentEvent(\''+rowdata.id+'\');"></span>'
+	                       + '<span class="img_edit hand" title="修改" onclick="toUpdateRsEnvironmentEvent(\''+rowdata.id+'\');"></span>' 
+	                       + '<span class="img_delete hand" title="删除" onclick="toDelRsEnvironmentEvent(\''+rowdata.id+'\');"></span>'
+	                       + '</div>';
+		        		   return html; 
+		        	   }}],
+		     usePager : false,   
+		     enabledSort : false, 
+		     rowHeight:30,
+             headerRowHeight:40,
+		     height: '95%', 
+		     width:"100%", 
+		     //sortName: 'roleId',   
+		     data:data,
+		     rownumbers:true,
+		     checkbox : false,
+		     rownumbers : true,
+		     toolbar:{
+	 	     	items:[{text: '新增   ', click:toAddRsEnvironmentEvent, iconClass: 'icon_add'}]
+		     }
+		 });
+	}
+	
+	//条件搜索
+	function getParam(){
+		var param = {
+		     eventName: $("#eventName").val(),
+		     eventLevelCode: $("#eventLevelCode").val(),
+		     emergPlanName: $("#emergPlanName").val(),
+		     eventTime: $("#eventTime").val()
+		}
+		return param;
+	}
+	
+	var dialog = null;
+	function toAddRsEnvironmentEvent(){
+		parentRsEnvironmentEventId = "";
+		dialog = new Dialog();
+		dialog.Title = "新增环境事件记录";
+		dialog.URL = "add.html";
+		dialog.Width = 500;
+		dialog.Height = 500;
+		dialog.ShowButtonRow = true;
+		dialog.OKEvent = function(){
+			dialog.innerFrame.contentWindow.addOrUpateRsEnvironmentEvent(dialog, onSearch);
+		};
+		dialog.show();
+	}
+	
+	function toUpdateRsEnvironmentEvent(id){
+		parentRsEnvironmentEventId = id; 
+		dialog = new Dialog();
+		dialog.Title = "修改环境事件记录";
+		dialog.URL = "add.html";
+		dialog.Width = 500;
+		dialog.Height = 500; 
+		dialog.ShowButtonRow = true;
+		dialog.OKEvent = function(){
+			dialog.innerFrame.contentWindow.addOrUpateRsEnvironmentEvent(dialog, onSearch);
+		};
+		dialog.show();
+	}
+	
+	function toDetailRsEnvironmentEvent(id){
+		parentRsEnvironmentEventId = id; 
+		dialog = new Dialog();
+		dialog.Title = "环境事件记录详情";
+		dialog.URL = "detail.html";
+		dialog.Width = 650;
+		dialog.Height = 350;
+		dialog.ShowButtonRow = true;
+		dialog.ShowOkButton = false;
+		dialog.CancelButtonText="关闭";
+		dialog.show();
+	}
+	
+	function toDelRsEnvironmentEvent(id){
+		Dialog.confirm("确认删除吗", function(){ 
+			$.ajax({
+				url : "/cgi/emergsys/rs/rsenvironmentevent/del",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				type : "post",
+				data : JSON.stringify({id :id }),
+				cache : false,
+				success : function(data) {
+					Dialog.alert(data.msg, function(){
+						if (data.status == "1") {
+							loadData(); 
+						}
+					});
+				}
+			});
+			
+		});
+	}		
+	
+	function onSearch(){
+		grid.setNewPage(1);
+		loadData();//加载数据
+	}	
+	
+	function onReset(){
+		 $("#queryForm")[0].reset();
+		 $('#search').click();
+	}	
+		
+	function loadData() {
+		loadPagationData({
+			url : "/cgi/emergsys/rs/rsenvironmentevent/page",
+			data : getParam(), 
+			grid : grid,
+			pageContent : "pageContent"
+		});
+	}
+	
+	function searchHandler() {
+		pageNo = 1;
+		pageSize = 10;
+		loadData();
+	}
+	
+	$(function(){
+		enterPress();
+		trimInput();
+		initGrid();
+		loadData();
+	});
+
+</script>
+</head>
+<body>
+	<div class="list-max">
+	  	<div class="box2 search-content folder" panelTitle="RsEnvironmentEvent管理">
+			<div class="search-condition">
+				<form id="queryForm">
+					<table class="form-table search-table">
+						<tr>
+                         <th>环境事件名称：</th>
+                            <td><input type="text" value="" id="eventName" name="eventName" class="input" /></td>
+						</tr>
+					</table>
+				</form>				
+			</div>
+			<div class="search-button">
+				<button type="button" id="search" onclick="onSearch();">查询</button>
+				<button type="reset" onclick="onReset();">重置</button>
+			</div>
+	    </div>
+	    <div class="list-list">
+	        <div id="dataBasic"></div>
+			<div id="pageContent"></div>
+	    </div>
+	</div>
+</body>
+</html>

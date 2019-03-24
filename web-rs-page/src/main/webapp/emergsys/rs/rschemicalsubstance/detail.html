@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>化学物质详情</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="http://127.0.0.1:8011/web-bp-build/" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<style type="text/css">
+#showTable th{
+	width: 100px;
+}
+</style>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<script type="text/javascript">
+var id = parent.parentRsChemicalSubstanceId;
+$(function(){
+	loadRsChemicalSubstanceDetails();
+});
+
+function loadRsChemicalSubstanceDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rschemicalsubstance/get",
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") { 
+				if(data.data) {
+					var obj = data.data;
+					$("table td").each(function(){
+						var value = obj[$(this).attr('id')];
+						$(this).text(value == 'null' || value == null ? '' : value);
+					});
+				}
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+			
+		}
+	});
+}
+</script>
+</head>
+<body>
+	<div class="list-max">
+		<table id="showTable" class="show-table">
+					<tr>
+						<th>化学物质名称：</th>
+						<td id="chemicalSubstanceName"></td>			
+						<th>英文名：</th>
+						<td id="englishName"></td>			
+					</tr>
+					<tr>
+						<th>分子式：</th>
+						<td id="molecularFormula"></td>			
+						<th>分子量：</th>
+						<td id="molecularWeight"></td>			
+					</tr>
+					<tr>
+						<th>熔点：</th>
+						<td id="meltingPoint"></td>			
+						<th>沸点：</th>
+						<td id="boilingPoint"></td>			
+					</tr>
+					<tr>
+						<th>相对密度：</th>
+						<td id="relativeDensity"></td>			
+						<th>蒸气压：</th>
+						<td id="vapourPressure"></td>			
+					</tr>
+					<tr>
+						<th>CAS号：</th>
+						<td id="casNum"></td>			
+						<th>物理分类：</th>
+						<td id="physicalClassification"></td>			
+					</tr>
+					<tr>
+						<th>物理状态：</th>
+						<td id="physicalState"></td>			
+						<th>外观形状：</th>
+						<td id="appearance"></td>			
+					</tr>
+					<tr>
+						<th>溶解性：</th>
+						<td id="solubility"></td>			
+						<th>禁忌物：</th>
+						<td id="tabooObject"></td>			
+					</tr>
+					<tr>
+						<th>存储容器：</th>
+						<td id="storageVessel"></td>			
+						<th>存储方式：</th>
+						<td id="storageMode"></td>			
+					</tr>
+					<tr>
+						<th>化学品用途：</th>
+						<td id="purpose"></td>			
+						<th>设计最大存储量：</th>
+						<td id="designScore"></td>			
+					</tr>
+					<tr>
+						<th>临界量：</th>
+						<td id="maxScore"></td>			
+						<th>现存量：</th>
+						<td id="actualScore"></td>			
+					</tr>
+					<tr>
+						<th>稳定性和危险性：</th>
+						<td id="stabilityAndRisk"></td>			
+						<th>对环境的影响：</th>
+						<td id="environmentalImpact"></td>			
+					</tr>
+					<tr>
+						<th>安全防护措施：</th>
+						<td id="securityMeasure"></td>			
+						<th>应急处理处置方法：</th>
+						<td id="emergHandleMethod"></td>			
+					</tr>
+					<tr>
+						<th>风险单元编码：</th>
+						<td id="riskUnitCode"></td>			
+						<th>风险单元名称：</th>
+						<td id="riskUnitName"></td>			
+					</tr>
+		</table>
+	</div>
+</body>
+</html>

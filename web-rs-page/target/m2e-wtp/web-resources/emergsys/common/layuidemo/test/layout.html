@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+  <link rel="stylesheet" href="./css.css"  media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+  <style type="text/css">
+  	.layui-container{
+  	width:1878px;
+  	padding: 0px;
+  	margin: 0px; 
+  	height:2800px;
+/*   	background-color: rgba(0,0,0,0.2); */
+  	}
+
+  	.map{
+  		background-image: url('./images/u1035.png');
+  		background-repeat:inherit;
+  		width:1878px;
+  		height:2800px;
+  		position: absolute;
+  		margin: 0px;
+  		padding: 0px;
+  	}
+/*   	.top-panel{ */
+/*   		height: 65px; */
+/*   	} */
+   	.left-panel{ 
+/*    		width:335px; */
+   		height: 306px; 
+   	}
+   	.mid-panel{ 
+   		height: 306px; 
+   	} 
+  	.right-panel{ 
+/*    		width:330px;  */
+/*    		height: 330px;  */
+  	} 
+  	  	.layui-card{
+		border-radius:0px;
+		border:1px;
+ 		border-color: rgb(42,42,42); 
+/*  		background-color: #173542;  */
+		background-color:rgba(0,0,0,0.6) !important;
+ 		background-image:url('./images/u14.png');
+ 		background-size:100% 100%;
+ 		
+  	}
+  	
+		.layui-card-body{
+						
+		}
+		.layui-card-header{
+			text-align: left;
+			font-family:'Arial Negreta', 'Arial Normal', 'Arial';
+			font-weight:700;
+			font-size:12px;
+			color:#fff;
+		}
+		
+		.icon-tool{
+			width: 60px;
+			height: 74px;
+			float: left;
+		}
+		.icon-tool p{
+			height: 10px;
+			color: #C1C9D7;
+			margin-top:5px;
+			font-size:12px;
+			
+		}
+		.icon-tool-member{
+			width: 60px;
+			height: 74px;
+			float: left;
+		}
+		.icon-tool-member img{
+			width: 37px;
+			height: 37px;
+			background-repeat: no-repeat;
+			background-position:center;
+		}
+		.icon-tool-member p{
+			height: 10px;
+			color: #C1C9D7;
+			margin-top:5px;
+			font-size:12px;
+			
+		}
+		.exe-panel{
+			background-image:url('./images/u335.png');
+		}
+		.icon-tool-exe {
+			width: 60px;
+			height: 74px;
+			float: left;
+			text-align: center;	
+			position:relative;
+			margin-left: 170px;
+		}
+		.icon-tool-exe p{
+			font-weight:400;
+			font-family:'Arial Normal', 'Arial';
+			color:#C1C9D7;
+			font-size:12px;
+			text-align:center;
+			width:52px;
+			height: 52px;
+			position: absolute;
+			top:30px;
+			left:4px;
+			
+		}
+		.icon-tool-exe p:first-child{
+			top:11px;
+		}
+		.play{
+			position: relative;	
+			background-image:url('./images/u332.png');
+		}
+		.play img{
+			float: left;
+			margin-top: 10px;
+		}
+/* 		.play .total{ */
+/* 			margin-top: 15px; */
+/* 			height: 5px; */
+/* 			width: 1000px;  */
+/* 		} */
+/* 		.play .used{ */
+/* 			position: absolute; */
+/* 			top:5px; */
+/* 			left: 32px; */
+/* 			height: 5px; */
+/* 			width: 950px; */
+/* 		} */
+		.play .process{
+			width: 90%;
+			position:absolute;
+			height: 5px;
+			left:37px;
+			top:14px;
+			
+		}
+/* 		.play .layui-progress{ */
+/* 			position: absolute; */
+/* 			left: 37px; */
+/* 			top:14px; */
+/* 			width: 100%; */
+/* 		} */
+		.detail{
+			text-align: center;
+		}
+		.detail div{
+			width: 50%;
+			text-align:right;
+			float: left;
+		}
+		.detail p span{
+			color:#8896B3;
+			font-size:12px;
+			text-align:right;
+			width:71px;
+			height:30px;
+		} 
+		.detail .content{
+			text-align:left;
+		}
+		.map-tool{
+/* 			width: 426px; */
+			height:70px;
+		}
+		.layui-layer-border{
+			border:1px solid rgba(0,0,0,.5) !important;
+			background-color:rgba(0,0,0,0.6) !important;
+			box-shadow:none  !important;
+		}
+		.layui-layer-dialog{
+			background-image:url('./images/u276.png');
+			background-size:100%; 
+		}
+		.layui-layer-content{
+			color:#fff !important;
+		}
+		.layui-layer-title {
+			border-bottom:1px solid rgba(255,102,102)  !important;
+			background-color:rgba(0,0,0,0.8) !important;
+			color:#fff !important;
+		}
+		
+  </style>
+</head>
+<body>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+  <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+  <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->          
+<div id="map" class="map"></div>
+<div class=" layui-container ">
+  <div class="layui-row layui-col-space1">
+    <div class="layui-col-lg2">
+    </div>
+    <div class="layui-col-lg8">
+      		<div class="layui-row  layui-col-space1" style="margin-top:30px;">
+		        <div class="layui-col-lg5">
+		           <img src="./images/u408.png" width="100%">
+		        </div>
+		        <div class="layui-col-lg2" style="color:rgb(7, 248, 218);text-align: center;font-size: 18px;font-weight: 700;">
+		          <span>应急指挥</span>
+		        </div>
+		        <div class="layui-col-lg5">
+		           <img src="./images/u410.png" width="100%"> 
+		        </div>
+	      </div>
+    </div>
+    <div class="layui-col-lg2">
+      <div class="grid-demo grid-demo-bg1 top-panel"></div>
+    </div>
+  </div>
+   
+  <div class="layui-row layui-col-space1 main-row" >
+    <div class="layui-col-lg3">
+    	 <div class="layui-row grid-demo layui-col-space10">
+	        <div class="layui-col-lg6 ">
+	          	<div class="layui-row grid-demo layui-col-space10">
+			        <div class="layui-col-lg12 ">
+			          	<div class="layui-card left-panel" style="height: 180px;"> 
+						  <div class="layui-card-header"><img alt="" src="./images/u1176.png">&nbsp;&nbsp;&nbsp;&nbsp;接警信息</div>
+						  <div class="layui-card-body detail">
+						   		<div>
+						   			<p>
+						   			<span>标题：</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p class="content">
+						   			<span >内容</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p>
+						   			<span>事发地点：</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p class="content">
+						   			<span >内容</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p>
+						   			<span>类型：</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p class="content">
+						   			<span >内容</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p>
+						   			<span>类型描述：</span>
+						   			</p>
+						   		</div>
+						   		<div>
+						   			<p class="content">
+						   			<span >内容</span>
+						   			</p>
+						   		</div>
+						  </div>
+						</div>
+			        </div>
+			      </div>
+	          	<div class="layui-row grid-demo layui-col-space10" style="height: 180px;">
+			        <div class="layui-col-lg12 ">
+			          	<div class="layui-card left-panel" style="height: 180px;"> 
+						  <div class="layui-card-header"><img alt="" src="./images/u1178.png">&nbsp;&nbsp;&nbsp;&nbsp;当前情况</div>
+						  <div class="layui-card-body">
+						  <div class="layui-card-body detail">
+						   		<div>
+									<p>
+									<span>污染物质：</span>
+									</p>
+								</div>
+								<div>
+									<p class="content">
+									<span >内容</span>
+									</p>
+								</div>
+								<div>
+									<p>
+									<span>扩散范围：</span>
+									</p>
+								</div>
+								<div>
+									<p class="content">
+									<span >内容</span>
+									</p>
+								</div>
+								<div>
+									<p>
+									<span>影响人数：</span>
+									</p>
+								</div>
+								<div>
+									<p class="content">
+									<span >内容</span>
+									</p>
+								</div>
+								<div>
+									<p>
+									<span>监测浓度：</span>
+									</p>
+								</div>
+								<div>
+									<p class="content">
+									<span >内容</span>
+									</p>
+								</div>
+						  </div>
+						  </div>
+						</div>
+			        </div>
+			      </div>
+	        </div>
+	        <div class="layui-col-lg6">
+	          <div class="layui-card left-panel " style="height: 690px;">
+				  <div class="layui-card-header"><img alt="" src="./images/u1174.png">&nbsp;&nbsp;&nbsp;&nbsp;时间轴</div>
+				  <div class="layui-card-body">
+				    
+				  </div>
+				</div>
+	        </div>
+	        
+	      </div>
+	      
+    </div>
+    <div class="layui-col-lg6">
+     	   <div class="layui-row grid-demo ">
+		        <div class="layui-col-lg12">
+		          <div class="grid-demo grid-demo-bg1 mid-panel" style="height: 540px; text-align: center;">
+			          	<div style="position:absolute;left:30%;" class="map-tool" style="margin:0 auto;">
+		          			<div class="icon-tool">
+			          			<img alt="" src="./images/icon/icon_message.png">
+			          			<p>专家库</p> 
+			          		</div>
+		          			<div class="icon-tool">
+			          			<img alt="" src="./images/icon/icon_mapxy.png">
+			          			<p>地图标识</p> 
+			          		</div>
+			          		<div class="icon-tool">
+			          			<img alt="" src="./images/icon/icon_report.png">
+			          			<p>现场上报</p> 
+			          		</div>
+			          		<div class="icon-tool">
+			          			<img alt="" src="./images/icon/icon_change.png">
+			          			<p>调度</p> 
+			          		</div>
+			          		<div class="icon-tool">
+			          			<img alt="" src="./images/icon/icon_dispatch.png">
+			          			<p>任务派发</p> 
+			          		</div>
+			          		<div class="icon-tool">
+			          			<img alt="" src="./images/icon/icon_analysis.png">
+			          			<p>分析研判</p> 
+			          		</div>
+			          </div>
+		          </div>
+		        </div>
+	      </div>
+     	   <div class="layui-row grid-demo ">
+		        <div class="layui-col-lg12">
+		          	<div class="layui-card mid-panel exe-panel" style="height: 220px;"> 
+					  <div class="layui-card-header">预案执行情况</div>
+					  <div class="layui-card-body">
+						  	<div class="icon-tool-exe">
+			          			<img alt="" src="./images/u349.png">
+			          			<div>
+			          				<p>人员</p>
+			          				<p>6/12</p>
+			          			</div>
+			          		</div>
+						  	<div class="icon-tool-exe">
+			          			<img alt="" src="./images/u390.png">
+			          			<div>
+			          				<p>上报</p>
+			          				<p>6/12</p>
+			          			</div>
+			          		</div>
+						  	<div class="icon-tool-exe">
+			          			<img alt="" src="./images/u392.png">
+			          			<div>
+			          				<p>物资</p>
+			          				<p>6/12</p>
+			          			</div>
+			          		</div>
+						  	<div class="icon-tool-exe">
+			          			<img alt="" src="./images/u388.png">
+			          			<div>
+			          				<p>外部</p>
+			          				<p>6/12</p>
+			          			</div>
+			          		</div>
+						  	<div class="icon-tool-exe">
+			          			<img alt="" src="./images/u384.png">
+			          			<div>
+			          				<p>监测</p>
+			          				<p>6/12</p>
+			          			</div>
+			          		</div>
+			          		<div class="icon-tool-exe">
+			          			<img alt="" src="./images/u384.png">
+			          			<div>
+			          				<p>疏散</p>
+			          				<p>6/12</p>
+			          			</div>
+			          		</div>
+					  </div>
+					</div>
+		        </div>
+	      </div>
+     	   <div class="layui-row grid-demo ">
+		        <div class="layui-col-lg12">
+		            <div class="layui-card mid-panel play" style="height: 40px;" > 
+		            	<img alt="" src="./images/u347.png">
+		            	<img alt="" src="./images/u345.png">
+		            	<div class="process">
+<!-- 			            	<img class="used" alt="" src="./images/u342.png"> -->
+<!-- 			            	<img class="total" alt="" src="./images/u340.png"> -->
+									<div class="layui-progress">
+									  <div class="layui-progress-bar" lay-percent="40%" style="width: 50%"></div>
+									</div>
+		            	</div>
+					
+					</div>
+		        </div>
+	      </div>
+    </div>
+    <div class="layui-col-lg3">
+        <div class="layui-row grid-demo ">
+		        <div class="layui-col-lg6">
+		          <div class="layui-row grid-demo layui-col-space10">
+				        <div class="layui-col-lg12">
+				          	<div class="layui-card right-panel" style="height: 232px;"> 
+							  <div class="layui-card-header">企业监控</div>
+							  <div class="layui-card-body" style="padding: 0px;">
+							  	<img alt="" src="./images/tmp/u1477.png" style="width: 100%;height: 100%;">
+							  </div>
+							</div>
+				        </div>
+				        <div class="layui-col-lg12">
+				         	 <div class="layui-card right-panel" style="height: 232px;"> 
+							  <div class="layui-card-header">视频通话</div>
+							  <div class="layui-card-body" style="padding: 0px;">
+							  	<img alt="" src="./images/tmp/u1481.png" style="width: 100%;height: 100%;">
+							  </div>
+							</div>
+				        </div>
+				        <div class="layui-col-lg12">  
+				         	 <div class="layui-card right-panel" style="height: 232px;"> 
+							  <div class="layui-card-header">现场照片</div>
+							  <div class="layui-card-body" style="padding: 0px;">
+							  	<img alt="" src="./images/tmp/u1479.png" style="width: 100%;height: 100%;">
+							  </div>
+							</div>
+				        </div>
+			      </div>
+		        </div>
+		        <div class="layui-col-lg6"> 
+		          		<div class="layui-row grid-demo layui-col-space10">
+					        <div class="layui-col-lg12 ">
+					          <div class="layui-card right-panel" style="height: 125px;">  
+								  <div class="layui-card-header">应急处置群</div>
+								  <div class="layui-card-body">
+								  	<div class="icon-tool-member">
+					          			<img alt="" src="./images/u222.png" style="background-image: url('./images/u228.png');">
+					          			<p>张三</p> 
+					          		</div>
+								  	<div class="icon-tool-member">
+					          			<img alt="" src="./images/u222.png">
+					          			<p>李四</p> 
+					          		</div>
+								  </div>
+								</div>
+					        </div>
+					        <div class="layui-col-lg12 ">
+					          <div class="layui-card right-panel" style="height: 400px;"> 
+								  <div class="layui-card-header">聊天记录</div>
+								  <div class="layui-card-body">
+								  </div>
+								</div>
+					        </div>
+					        <div class="layui-col-lg12">
+					          <div class="layui-card right-panel" > 
+					          	<div class="layui-card-body" style="height: 300px;">
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u540.png">
+						          			<p>专家库</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u536.png">
+						          			<p>通讯录</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u538.png">
+						          			<p>知识库</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u542.png">
+						          			<p>值班室</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u534.png">
+						          			<p>值班表</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u556.png">
+						          			<p>应急物资</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u558.png">
+						          			<p>应急预案</p> 
+						          		</div>
+						          		<div class="icon-tool">
+						          			<img alt="" src="./images/u560.png">
+						          			<p>企业管理</p> 
+						          		</div>
+					          		</div>
+								</div>
+					        </div>
+			     		 </div> 
+		        </div>
+	      </div>
+    </div>
+  </div>
+</div>
+ 
+          
+<script src="../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use('layer', function(){
+	  var layer = layui.layer;
+	  
+	  layer.open({ 
+		  title: '在线调试'
+		  ,content: '<div class="detail"><div><p><span>1防护服：</span></p></div><div><p class="content"><span >12/15</span></p></div></div>'
+		  ,shade:false
+		  ,btn: []
+		});  
+	});  
+</script>
+
+</body>
+</html>

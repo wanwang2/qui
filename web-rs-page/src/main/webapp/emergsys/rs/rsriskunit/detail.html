@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>风险单元及防护措施详情</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="http://127.0.0.1:8011/web-bp-build/" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<style type="text/css">
+#showTable th{
+	width: 100px;
+}
+</style>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<!-- 异步上传控件start -->
+<script type="text/javascript" src="/static/pcweb/common/js/CGIConfig.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/UUIDUtil.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/libs/js/form/upload/fileUpload.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/libs/js/form/upload/handlers.js"></script>
+<!-- 异步上传控件end -->
+
+<script type="text/javascript">
+var riskUnitId = parent.parentRsRiskUnitId;
+$(function(){
+	loadRsRiskUnitDetails();
+});
+
+function loadRsRiskUnitDetails() {
+	var params = {riskUnitId:riskUnitId};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rsriskunit/get",
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") { 
+				if(data.data) {
+					var obj = data.data;
+					$("table td").each(function(){
+                        var domId = $(this).attr('id');
+                        if(domId == "uploadFileList"){
+                            return;
+                        }
+                        var value = obj[domId];
+                        $(this).text(value == 'null' || value == null ? '' : value);
+                    });
+                }
+                initUpload(obj.catalogId,"uploadFileList");
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+			
+		}
+	});
+}
+
+function initUpload(catalogId,fileListContainer) {
+    $.fileUpload.addUploadListRead({
+        contextPath : "/static/pcweb/common/libs/qui/3.3",
+        fileListContainer : fileListContainer,
+        listUrl :  "/cgi/bp/filemgt/special/getByCatalogIdWithQui",
+        catalogId : catalogId,
+        kind : "template",
+        downloadUrl : "/cgi/bp/filemgt/special/download?fileId="
+    });
+}
+</script>
+</head>
+<body>
+	<div class="list-max">
+		<table id="showTable" class="show-table">
+					<tr>
+						<th>风险单元编码：</th>
+						<td id="riskUnitCode"></td>			
+						<th>风险单元名称：</th>
+						<td id="riskUnitName"></td>			
+					</tr>
+					<tr>
+						<th>风险特征：</th>
+						<td id="riskFeature"></td>			
+						<th>风险等级：</th>
+						<td id="riskLevelName"></td>			
+					</tr>
+					<tr>
+						<th>经度：</th>
+						<td id="longitude"></td>			
+						<th>纬度：</th>
+						<td id="latitude"></td>			
+					</tr>
+					<tr>
+						<th>风险单元位置信息：</th>
+						<td id="place"></td>			
+						<th>主要风险物资：</th>
+						<td id="mainRiskMaterial"></td>			
+					</tr>
+					<tr>
+						<th>风险单元防范措施：</th>
+						<td id="riskUnitMeasure"></td>			
+						<th>风险单元事故处置措施：</th>
+						<td id="riskUnitTreatmentMeasure"></td>			
+					</tr>
+					<tr>
+						<th>最大设计储存量：</th>
+						<td id="designScore"></td>			
+						<th>现存量：</th>
+						<td id="actualScore"></td>			
+					</tr>
+					<tr>
+						<th>负责人：</th>
+						<td id="dutyPerson"></td>			
+						<th>负责人电话：</th>
+						<td id="dutyPersonTel"></td>			
+					</tr>
+					<tr>
+						<th>风险单元监控信息：</th>
+						<td id="riskUnitMonitorInfo"></td>			
+					</tr>
+					<tr>
+						<th>附件：</th>
+						<td colspan="2" id="uploadFileList"></td>
+					</tr>
+		</table>
+	</div>
+</body>
+</html>

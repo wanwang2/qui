@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>工业固体废物详情</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" prePath="http://127.0.0.1:8011/web-bp-build/" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<style type="text/css">
+#showTable th{
+	width: 100px;
+}
+</style>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<script type="text/javascript">
+var id = parent.parentRsIndustrialSolidWastesId;
+$(function(){
+	loadRsIndustrialSolidWastesDetails();
+});
+
+function loadRsIndustrialSolidWastesDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rsindustrialsolidwastes/get",
+		dataType : "json",
+		contentType : "application/json; charset=utf-8",
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") { 
+				if(data.data) {
+					var obj = data.data;
+					$("table td").each(function(){
+						var value = obj[$(this).attr('id')];
+						$(this).text(value == 'null' || value == null ? '' : value);
+					});
+				}
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+			
+		}
+	});
+}
+</script>
+</head>
+<body>
+	<div class="list-max">
+		<table id="showTable" class="show-table">
+					<tr>
+						<th>固体废物名称：</th>
+						<td id="solidWastesName"></td>			
+						<th>类型name：</th>
+						<td id="typeName"></td>			
+					</tr>
+					<tr>
+						<th>危废类别代码：</th>
+						<td id="wasteCategoryCode"></td>			
+						<th>物理状态：</th>
+						<td id="physicalState"></td>			
+					</tr>
+					<tr>
+						<th>主要化学物质：</th>
+						<td id="majorChemicals"></td>			
+						<th>风险特性：</th>
+						<td id="riskCharacteristics"></td>			
+					</tr>
+					<tr>
+						<th>危险特性：</th>
+						<td id="hazardCharacteristics"></td>			
+						<th>运输方式：</th>
+						<td id="transportMode"></td>			
+					</tr>
+					<tr>
+						<th>处置方式：</th>
+						<td id="handleMode"></td>			
+						<th>设计最大存储量：</th>
+						<td id="designScore"></td>			
+					</tr>
+					<tr>
+						<th>临界量：</th>
+						<td id="maxScore"></td>			
+						<th>现存量：</th>
+						<td id="actualScore"></td>			
+					</tr>
+					<tr>
+						<th>去向：</th>
+						<td id="dispositon"></td>			
+						<th>安全防护措施：</th>
+						<td id="securityMeasure"></td>			
+					</tr>
+					<tr>
+						<th>应急处理处置方法：</th>
+						<td id="emergHandleMethod"></td>			
+						<th>风险单元编码：</th>
+						<td id="riskUnitCode"></td>			
+					</tr>
+					<tr>
+						<th>风险单元名称：</th>
+						<td id="riskUnitName"></td>			
+					</tr>
+	</div>
+</body>
+</html>

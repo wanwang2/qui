@@ -1,0 +1,300 @@
+{
+  "ui": {
+    "theme": "darkblue",
+    "render": [
+      "canvas",
+      "webgl"
+    ],
+    "layerrenderMode": "vector",
+    "city": {
+      "adcode": "510500000000",
+      "level": "2"
+    },
+    "map": {
+      "options": {
+        "maxExtent": [
+          105.26685874280943,
+          28.859334541788606,
+          105.73551604132899,
+          29.047253489207247
+        ],
+        "initExtent": [
+          105.26685874280943,
+          28.859334541788606,
+          105.73551604132899,
+          29.047253489207247
+        ],
+        "minZoom": 9,
+        "maxZoom": 16,
+        "epsg": "EPSG:3857"
+      },
+      "baseLayer": [
+        {
+          "source": "arciis",
+          "type": "tiled",
+          "url": "/upmap/uptilemap/lzgeoq",
+          "lable": "行政图",
+          "projection": "3857",
+          "icon": "/upmap/static/images/vec-icon.png",
+          "id": "image_layer",
+          "visible": true
+        }
+      ],
+      "businessLayer": [
+        {}
+      ],
+      "popupPosition": ""
+    },
+    "widgets": [
+      {
+        "controlTag": "person-widget",
+        "placement": "none"
+      },
+      {
+        "controlTag": "spot-widget",
+        "placement": "none"
+      },
+      {
+        "controlTag": "risk-widget",
+        "placement": "none"
+      },
+      {
+        "controlTag": "material-widget",
+        "placement": "none"
+      },
+      {
+        "controlTag": "up-search",
+        "placement": "left-top",
+        "useThumbnail": true,
+        "styleBase": {
+          "fill": {
+            "color": "#D4F2FA"
+          },
+          "stroke": {
+            "color": "#FE1D1C",
+            "width": 2
+          },
+          "image": {
+            "crossOrigin": "anonymous",
+            "size": [
+              32,
+              32
+            ],
+            "anchor": [
+              0.5,
+              1
+            ],
+            "scale": 1,
+            "src": "/upmap/static/images/map-red.png"
+          },
+          "text": {
+            "field": "__index__",
+            "fill": {
+              "color": "#fff"
+            },
+            "font": "14px Calibri,sans-serif",
+            "textAlign": "center",
+            "textBaseline": "top",
+            "offsetY": -28
+          }
+        },
+        "styleSelected": {
+          "fill": {
+            "color": "#C78F8F"
+          },
+          "stroke": {
+            "color": "#979790",
+            "width": 2
+          },
+          "image": {
+            "crossOrigin": "anonymous",
+            "size": [
+              32,
+              32
+            ],
+            "anchor": [
+              0.5,
+              1
+            ],
+            "scale": 1,
+            "src": "/upmap/static/images/map-blue.png"
+          },
+          "text": {
+            "field": "__index__",
+            "fill": {
+              "color": "#fff"
+            },
+            "font": "14px Calibri,sans-serif",
+            "textAlign": "center",
+            "textBaseline": "top",
+            "offsetY": -28
+          }
+        }
+      },
+      {
+        "controlTag": "up-measure",
+        "placement": "right-top"
+      },
+      {
+        "controlTag": "up-zone-location",
+        "placement": "right-top"
+      },
+      {
+        "controlTag": "up-home",
+        "placement": "right-bottom"
+      },
+      {
+        "controlTag": "up-zoom",
+        "placement": "right-bottom",
+        "style": "margin-top: 8px;"
+      },
+      {
+        "controlTag": "up-scale",
+        "placement": "left-bottom"
+      },
+      {
+        "controlTag": "up-overview-map",
+        "placement": "right-top"
+      },
+      {
+        "controlTag": "up-legend",
+        "placement": "none",
+        "style": "right:130px;bottom:20px;position:absolute;"
+      },
+      {
+        "controlTag": "up-map-type",
+        "placement": "none",
+        "style": "right:10px;bottom:10px;position:absolute;"
+      },
+      {
+        "controlTag": "up-title-window",
+        "placement": "none"
+      },
+      {
+        "controlTag": "up-full-screen",
+        "placement": "right-top",
+        "el": "app"
+      },
+      {
+        "controlTag": "up-info-window",
+        "placement": "none"
+      },
+      {
+        "controlTag": "up-resources-tree",
+        "placement": "right-top",
+        "option": [
+          {
+            "id": 3,
+            "label": "敏感点",
+            "click":"spot_position"
+          },
+          {
+            "id": 4,
+            "label": "物资设备",
+            "click":"material_position"
+          },
+          {
+            "id": 7,
+            "label": "人员",
+            "click":"person_position"
+          },
+          {
+            "id": 5,
+            "label": "风险源",
+            "click":"risk_position"
+          }
+        ]
+      }
+    ]
+  },
+  "template": {
+    "suggest": [
+      {
+        "title": "污染源",
+        "code": "污染源",
+        "img": "/upmap/static/images/search/wry.png"
+      },
+      {
+        "title": "敏感点",
+        "code": "敏感点",
+        "img": "/upmap/static/images/search/mgd.png"
+      },
+      {
+        "title": "风险源",
+        "code": "风险源",
+        "img": "/upmap/static/images/search/mgd.png"
+      },
+      {
+        "title": "人员",
+        "code": "人员",
+        "img": "/upmap/static/images/search/mgd.png"
+      }
+    ],
+    "list": {
+      "gis": "gis",
+      "psms": "psms",
+      "mgd": "mgd",
+      "division": "division"
+    },
+    "detial": {
+      "gis": {
+        "extBaseInfo": "",
+        "module": []
+      },
+      "division": {
+        "extBaseInfo": "",
+        "module": []
+      },
+      "psms": {
+        "extBaseInfo": "psms-detial",
+        "module": [
+          {
+            "name": "视频监控",
+            "template": "pollute-spjk",
+            "typecode": "1000"
+          },
+          {
+            "name": "在线监测",
+            "template": "pollute-zxjc",
+            "typecode": "1001"
+          },
+          {
+            "name": "工况监控",
+            "template": "pollute-gkjk",
+            "typecode": "1002"
+          },
+          {
+            "name": "固危废",
+            "template": "pollutes-gfw"
+          },
+          {
+            "name": "排口",
+            "template": "pollutes-pk"
+          },
+          {
+            "name": "治理设施",
+            "template": "pollutes-zlss"
+          }
+        ]
+      },
+      "treatment": {
+        "extBaseInfo": "jgd-Zlss"
+      },
+      "event-info": {
+        "extBaseInfo": "up-event-info"
+      },
+      "water_outlet": {
+        "extBaseInfo": "jgd-pwk-water"
+      },
+      "gas_outlet": {
+        "extBaseInfo": "jgd-pwk-gas"
+      },
+      "noise_outlet": {
+        "extBaseInfo": "jgd-pwk-noise"
+      },
+      "solid": {
+        "extBaseInfo": "jgd-ccss"
+      }
+    }
+  }
+}

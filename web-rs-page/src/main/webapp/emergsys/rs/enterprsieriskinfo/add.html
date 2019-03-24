@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加EnterprsieRiskInfo</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<script type="text/javascript">
+var id = parent.parentEnterprsieRiskInfoId;
+
+function initComplete(){
+	if(id != ""){
+		loadEnterprsieRiskInfoDetails();
+	}
+}
+
+function loadEnterprsieRiskInfoDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/enterprsieriskinfo/get", 
+		dataType : "json",
+		contentType : "application/json; charset=utf-8", 
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") {
+				if(data.data) {
+					var obj = data.data;
+                   $("table input,table textarea").each(function(){
+                        var value = obj[$(this).attr('id')];
+                        $(this).val(value == 'null' || value == null ? '' : value);
+                    });
+					$("#enterprsieriskinfoStatus").setValue(data.data.state);
+					$("#enterprsieriskinfoStatus").render();
+				}
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+		}
+	}); 
+}
+
+
+function addOrUpateEnterprsieRiskInfo(dialog,callback){
+	var valid = $('#addOrUpdateEnterprsieRiskInfoForm').validationEngine({
+		returnIsValid : true
+	});
+
+	if(valid){
+		var params = {
+		     enterpriseId: $("#enterpriseId").val(),
+		     riskAttribute: $("#riskAttribute").val(),
+		     riskLevelCode: $("#riskLevelCode").val(),
+		     riskLevelName: $("#riskLevelName").val(),
+		     riskAssRewport: $("#riskAssRewport").val(),
+		     isRecorded: $("#isRecorded").val(),
+		     sdEventPlan: $("#sdEventPlan").val(),
+		     sdPlRecord: $("#sdPlRecord").val(),
+		     riskUnitNum: $("#riskUnitNum").val(),
+		     majorRiskMaterial: $("#majorRiskMaterial").val(),
+		     emergManager: $("#emergManager").val(),
+		     tel: $("#tel").val(),
+		     catalogId: $("#catalogId").val(),
+		     createTime: $("#createTime").val(),
+		     versionTime: $("#versionTime").val(),
+		     status: $("#status").val()
+		};
+		var requestUrl = "/cgi/emergsys/rs/enterprsieriskinfo/add";
+		if(id != ""){
+			requestUrl = "/cgi/emergsys/rs/enterprsieriskinfo/mod";
+		    params.id = id;
+		}
+
+		$.ajax({
+			url : requestUrl,
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			type : "post",
+			data : JSON.stringify(params),
+			cache : false,
+			success : function(data) {
+				if (data.status == "1") {
+					parent.Dialog.alert("操作成功！", function(){
+						callback();
+						dialog.close();
+					});
+				}else{
+					Dialog.alert(data.msg);
+				}
+			}
+		});
+	}
+}
+
+
+
+</script>
+</head>
+<body>
+ <form action="" id='addOrUpateEnterprsieRiskInfoForm'>
+	<table class="form-table single">
+			<tr>
+			    <th><span class="star">*</span>id：</th>
+				<td><input type="text" id="id" name="id" class="input validate[length[0,32]]" /></td>
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>企业id：</th>
+				<td><input type="text" id="enterpriseId" name="enterpriseId" class="input validate[required,length[0,32]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险属性：</th>
+				<td><input type="text" id="riskAttribute" name="riskAttribute" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>环境风险等级code：</th>
+				<td><input type="text" id="riskLevelCode" name="riskLevelCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>环境风险等级name：</th>
+				<td><input type="text" id="riskLevelName" name="riskLevelName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险评估报告（有/无）：</th>
+				<td><input type="text" id="riskAssRewport" name="riskAssRewport" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风评报告备案(有备案/无备案)：</th>
+				<td><input type="text" id="isRecorded" name="isRecorded" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>突发环境应急事件应急预案备案：</th>
+				<td><input type="text" id="sdEventPlan" name="sdEventPlan" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>突发环境事件应急预案备案：</th>
+				<td><input type="text" id="sdPlRecord" name="sdPlRecord" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险单元数：</th>
+				<td><input type="text" id="riskUnitNum" name="riskUnitNum" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>主要风险物质：</th>
+				<td><input type="text" id="majorRiskMaterial" name="majorRiskMaterial" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>应急负责人：</th>
+				<td><input type="text" id="emergManager" name="emergManager" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>应急负责人电话：</th>
+				<td><input type="text" id="tel" name="tel" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>附件批次id：</th>
+				<td><input type="text" id="catalogId" name="catalogId" class="input validate[required,length[0,32]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>版本时间：</th>
+				<td><input type="text" id="versionTime" name="versionTime" class="input validate[required,length[0,13]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>状态：</th>
+				<td><input type="text" id="status" name="status" class="input validate[required,length[0,2]]" /></td>	
+					
+			</tr>  
+		
+	</table>
+ </form>
+</body>
+</html>

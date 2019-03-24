@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>应急地图</title>
+    <!--[if IE 9]>
+        <script src="./static/js/polyfill.min.js"></script>
+        <script src="./static/js/polyfill.js"></script>
+    <![endif]-->
+    <link href='/upmap/static/css/app.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div id=app>
+    </div>
+    <!-- businessWidget.js中BusinessWidgetVUE实例会使用这个模板 -->
+    <script id='problem-area-widget-template' type="text/template">
+        <div>  
+            <div>
+                <!-- 矢量图层 -->
+                <layer ref="layer" :features="sourceFeatures" 
+                    :featureStyle="defaultStyle" :selectedFeatureStyle="selectedStyle" 
+                    :canInteractive="true" :canHover="true"  :zIndex="401"></layer>
+            </div>
+        </div>
+    </script>
+    <script type='text/javascript' src='/upmap/static/js/ol.js'> </script>
+    <script type='text/javascript' src='/upmap/static/js/manifest.js'></script>
+    <script type='text/javascript' src='/upmap/static/js/vendor.js'></script>
+    <script type='text/javascript' src='/upmap/static/js/app.js'></script>
+    <!-- 若使用echarts组件，不需要可自行注释 -->
+    <!-- <script src="/upmap/static/js/echarts.common.min.js"></script> -->
+    <!-- 将businessWidget.js引入到html页面 -->
+    <script type='text/javascript' src="./widgets/problemArea/widget.js"></script>
+</body>
+
+</html>

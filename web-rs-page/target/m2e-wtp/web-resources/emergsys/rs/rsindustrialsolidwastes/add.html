@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>新增工业固体废物</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<!--数据表格end-->
+
+<!-- 表单验证start -->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validationRule.js" type="text/javascript"></script>
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/validation.js" type="text/javascript"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+<!-- 表单验证end -->
+
+<script type="text/javascript">
+var id = parent.parentRsIndustrialSolidWastesId;
+
+function initComplete(){
+	if(id != ""){
+		loadRsIndustrialSolidWastesDetails();
+	}
+}
+
+function loadRsIndustrialSolidWastesDetails() {
+	var params = {id:id};
+	$.ajax({
+		url : "/cgi/emergsys/rs/rsindustrialsolidwastes/get", 
+		dataType : "json",
+		contentType : "application/json; charset=utf-8", 
+		type : "post",
+		data : JSON.stringify(params),
+		cache : false,
+		success : function(data) {
+			if (data.status == "1") {
+				if(data.data) {
+					var obj = data.data;
+                   $("table input,table textarea").each(function(){
+                        var value = obj[$(this).attr('id')];
+                        $(this).val(value == 'null' || value == null ? '' : value);
+                    });
+					$("#rsindustrialsolidwastesStatus").setValue(data.data.state);
+					$("#rsindustrialsolidwastesStatus").render();
+				}
+			}else{
+				parent.Dialog.alert(data.msg, function(){});
+			}
+		}
+	}); 
+}
+
+
+function addOrUpateRsIndustrialSolidWastes(dialog,callback){
+	var valid = $('#addOrUpdateRsIndustrialSolidWastesForm').validationEngine({
+		returnIsValid : true
+	});
+
+	if(valid){
+		var params = {
+		     id: $("#id").val(),
+		     solidWastesName: $("#solidWastesName").val(),
+		     typeCode: $("#typeCode").val(),
+		     typeName: $("#typeName").val(),
+		     wasteCategoryCode: $("#wasteCategoryCode").val(),
+		     physicalState: $("#physicalState").val(),
+		     majorChemicals: $("#majorChemicals").val(),
+		     riskCharacteristics: $("#riskCharacteristics").val(),
+		     hazardCharacteristics: $("#hazardCharacteristics").val(),
+		     transportMode: $("#transportMode").val(),
+		     handleMode: $("#handleMode").val(),
+		     designScore: $("#designScore").val(),
+		     maxScore: $("#maxScore").val(),
+		     actualScore: $("#actualScore").val(),
+		     dispositon: $("#dispositon").val(),
+		     securityMeasure: $("#securityMeasure").val(),
+		     emergHandleMethod: $("#emergHandleMethod").val(),
+		     riskUnitCode: $("#riskUnitCode").val(),
+		     riskUnitName: $("#riskUnitName").val(),
+		     createTime: $("#createTime").val(),
+		     versionTime: $("#versionTime").val(),
+		     status: $("#status").val()
+		};
+		var requestUrl = "/cgi/emergsys/rs/rsindustrialsolidwastes/add";
+		if(id != ""){ 
+			requestUrl = "/cgi/emergsys/rs/rsindustrialsolidwastes/mod";
+		    params.id = id;
+		}
+
+		$.ajax({
+			url : requestUrl,
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			type : "post",
+			data : JSON.stringify(params),
+			cache : false,
+			success : function(data) {
+				if (data.status == "1") {
+					parent.Dialog.alert("操作成功！", function(){
+						callback();
+						dialog.close();
+					});
+				}else{
+					Dialog.alert(data.msg);
+				}
+			}
+		});
+	}
+}
+
+
+
+</script>
+</head>
+<body>
+ <form action="" id='addOrUpateRsIndustrialSolidWastesForm'>
+	<table class="form-table single">
+
+			<tr>
+			    <th><span class="star">*</span>固体废物名称：</th>
+				<td><input type="text" id="solidWastesName" name="solidWastesName" class="input validate[required,length[0,50]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>类型：</th>
+				<td><input type="text" id="typeCode" name="typeCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+
+			<tr>
+			    <th><span class="star">*</span>危废类别代码：</th>
+				<td><input type="text" id="wasteCategoryCode" name="wasteCategoryCode" class="input validate[required,length[0,20]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>物理状态：</th>
+				<td><input type="text" id="physicalState" name="physicalState" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>主要化学物质：</th>
+				<td><input type="text" id="majorChemicals" name="majorChemicals" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险特性：</th>
+				<td><input type="text" id="riskCharacteristics" name="riskCharacteristics" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>危险特性：</th>
+				<td><input type="text" id="hazardCharacteristics" name="hazardCharacteristics" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>运输方式：</th>
+				<td><input type="text" id="transportMode" name="transportMode" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>处置方式：</th>
+				<td><input type="text" id="handleMode" name="handleMode" class="input validate[required,length[0,100]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>设计最大存储量：</th>
+				<td><input type="text" id="designScore" name="designScore" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>临界量：</th>
+				<td><input type="text" id="maxScore" name="maxScore" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>现存量：</th>
+				<td><input type="text" id="actualScore" name="actualScore" class="input validate[required,length[0,10]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>去向：</th>
+				<td><input type="text" id="dispositon" name="dispositon" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>安全防护措施：</th>
+				<td><input type="text" id="securityMeasure" name="securityMeasure" class="input validate[required,length[0,500]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>应急处理处置方法：</th>
+				<td><input type="text" id="emergHandleMethod" name="emergHandleMethod" class="input validate[required,length[0,500]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险单元编码：</th>
+				<td><input type="text" id="riskUnitCode" name="riskUnitCode" class="input validate[required,length[0,32]]" /></td>	
+					
+			</tr>  
+		
+			<tr>
+			    <th><span class="star">*</span>风险单元名称：</th>
+				<td><input type="text" id="riskUnitName" name="riskUnitName" class="input validate[required,length[0,200]]" /></td>	
+					
+			</tr>  
+		
+	</table>
+ </form>
+</body>
+</html>

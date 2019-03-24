@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>水环境及保护目标列表</title>
+
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/jquery.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/js/jquery-ajax-extend.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/language/cn.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/framework.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/datePicker/WdatePicker.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/css/import_basic.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" id="skin" splitMode="true" href="/static/pcweb/common/libs/qui/3.3/skins/blue/style.css"/>
+<script type="text/javascript" src="/static/pcweb/common/js/DateFormatUtil.js"></script>
+<!--数据表格start-->
+<script src="/static/pcweb/common/libs/qui/3.3/js/form/form.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/table/quiGrid.js"></script>
+<!--数据表格end-->
+
+<script type="text/javascript" src="/static/pcweb/common/js/pagation.js"></script>
+
+<!--箭头分页start-->
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/nav/pageNumber.js"></script>
+<!--箭头分页end-->
+
+<!--树组件与弹窗组件（这里引入只为“非iframe弹窗（复杂内容）”示例需要） -->
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/form/selectTree.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/tree/ztree/ztree.js"></script>
+<link href="/static/pcweb/common/libs/qui/3.3/js/tree/ztree/ztree.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/drag.js"></script>
+<script type="text/javascript" src="/static/pcweb/common/libs/qui/3.3/js/popup/dialog.js"></script>
+<link href="/static/pcweb/common/css/core.css" rel="stylesheet" type="text/css"/>
+<script src="/static/pcweb/common/js/uc-ui.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+	var parentRsWaterEnvId = "";
+	//回车检索
+	function enterPress(){
+		document.onkeydown = function(e){
+		    var ev = document.all ? window.event : e;
+		    if(ev.keyCode==13) {
+		    	onSearch();
+		     }
+		}
+	}
+	//清除空格
+	function trimInput(){		
+		$(".input").blur(function(){
+			var obj=$(this);
+			var val=obj.val();
+			obj.val(val.replace(/^\s+|\s+$/g, ''));
+		});
+	}
+	
+	//展示RsWaterEnv列表数据
+	var grid = null;
+	function initGrid(data){
+		if (!data) {
+			data = {rows:[]};
+		}
+		grid = $("#dataBasic").quiGrid({
+            columns:[
+		     	   { display: '废水主要排水去向类型', name: 'wwDirectionTypeName',  align: 'centre', width: "10%"},
+		     	   { display: '废水受纳水体名称', name: 'wwReceivingWaterName',  align: 'centre', width: "10%"},
+		     	   { display: '废水受纳水体功能类别', name: 'functionalCategoryName',  align: 'centre', width: "10%"},
+		     	   { display: '废水受纳水体距企业距离', name: 'rwDistance',  align: 'centre', width: "10%"},
+		     	   { display: '废水受纳水体水文参数', name: 'wwHydrologicalParameters',  align: 'centre', width: "10%"},
+		     	   { display: '清净下水主要排水去向类型', name: 'cwDirectionTypeName',  align: 'centre', width: "10%"},
+		     	   { display: '清净下水受纳水体水文参数', name: 'cwHydrologicalParameters2',  align: 'centre', width: "10%"},
+		     	   { display: '距企业距离（米）', name: 'distance',  align: 'centre', width: "10%"},
+		     	   { display: '所属环境功能', name: 'environmentFunction',  align: 'centre', width: "10%"},
+		           { display: '操作', align: 'centre', width:"10%", minWidth:81,
+		        	 render: function(rowdata, rowindex, value, column){
+		        		   if(rowdata.isInner==1){
+		        			   var html =  '<div class="padding_top4 padding_left5">'
+		                           + '<span class="img_list hand" title="查看" onclick="toDetailRsWaterEnv(\''+rowdata.rswaterenvId+'\');"></span>'
+		                           + '</div>';   
+		    	        		   return html;
+		        		   }
+		        		   var html =  '<div class="padding_top4 padding_left5">'
+	                       + '<span class="img_list hand" title="查看" onclick="toDetailRsWaterEnv(\''+rowdata.id+'\');"></span>'
+	                       + '<span class="img_edit hand" title="修改" onclick="toUpdateRsWaterEnv(\''+rowdata.id+'\');"></span>' 
+	                       + '<span class="img_delete hand" title="删除" onclick="toDelRsWaterEnv(\''+rowdata.id+'\');"></span>'
+	                       + '</div>';
+		        		   return html; 
+		        	   }}],
+		     usePager : false,   
+		     enabledSort : false, 
+		     rowHeight:30,
+             headerRowHeight:40,
+		     height: '95%', 
+		     width:"100%", 
+		     //sortName: 'roleId',   
+		     data:data,
+		     rownumbers:true,
+		     checkbox : false,
+		     rownumbers : true,
+		     toolbar:{
+	 	     	items:[{text: '新增   ', click:toAddRsWaterEnv, iconClass: 'icon_add'}]
+		     }
+		 });
+	}
+	
+	//条件搜索
+	function getParam(){
+		var param = {
+		     wwDirectionTypeCode: $("#wwDirectionTypeCode").val(),
+		     wwReceivingWaterName: $("#wwReceivingWaterName").val(),
+		}
+		return param;
+	}
+	
+	var dialog = null;
+	function toAddRsWaterEnv(){
+		parentRsWaterEnvId = "";
+		dialog = new Dialog();
+		dialog.Title = "新增水环境及保护目标";
+		dialog.URL = "add.html";
+		dialog.Width = 500;
+		dialog.Height = 500;
+		dialog.ShowButtonRow = true;
+		dialog.OKEvent = function(){
+			dialog.innerFrame.contentWindow.addOrUpateRsWaterEnv(dialog, onSearch);
+		};
+		dialog.show();
+	}
+	
+	function toUpdateRsWaterEnv(id){
+		parentRsWaterEnvId = id; 
+		dialog = new Dialog();
+		dialog.Title = "修改RsWaterEnv";
+		dialog.URL = "add.html";
+		dialog.Width = 500;
+		dialog.Height = 500; 
+		dialog.ShowButtonRow = true;
+		dialog.OKEvent = function(){
+			dialog.innerFrame.contentWindow.addOrUpateRsWaterEnv(dialog, onSearch);
+		};
+		dialog.show();
+	}
+	
+	function toDetailRsWaterEnv(id){
+		parentRsWaterEnvId = id; 
+		dialog = new Dialog();
+		dialog.Title = "RsWaterEnv详情";
+		dialog.URL = "detail.html";
+		dialog.Width = 650;
+		dialog.Height = 350;
+		dialog.ShowButtonRow = true;
+		dialog.ShowOkButton = false;
+		dialog.CancelButtonText="关闭";
+		dialog.show();
+	}
+	
+	function toDelRsWaterEnv(id){
+		Dialog.confirm("确认删除吗", function(){ 
+			$.ajax({
+				url : "/cgi/emergsys/rs/rswaterenv/del",
+				dataType : "json",
+				contentType : "application/json; charset=utf-8",
+				type : "post",
+				data : JSON.stringify({id :id }),
+				cache : false,
+				success : function(data) {
+					Dialog.alert(data.msg, function(){
+						if (data.status == "1") {
+							loadData(); 
+						}
+					});
+				}
+			});
+			
+		});
+	}		
+	
+	function onSearch(){
+		grid.setNewPage(1);
+		loadData();//加载数据
+	}	
+	
+	function onReset(){
+		 $("#queryForm")[0].reset();
+		 $('#search').click();
+	}	
+		
+	function loadData() {
+		loadPagationData({
+			url : "/cgi/emergsys/rs/rswaterenv/page",
+			data : getParam(), 
+			grid : grid,
+			pageContent : "pageContent"
+		});
+	}
+	
+	function searchHandler() {
+		pageNo = 1;
+		pageSize = 10;
+		loadData();
+	}
+	
+	$(function(){
+		enterPress();
+		trimInput();
+		initGrid();
+		loadData();
+	});
+
+</script>
+</head>
+<body>
+	<div class="list-max">
+	  	<div class="box2 search-content folder" panelTitle="RsWaterEnv管理">
+			<div class="search-condition">
+				<form id="queryForm">
+					<table class="form-table search-table">
+						<tr>
+                         <th>废水主要排水去向类型code：</th>
+                            <td><input type="text" value="" id="wwDirectionTypeCode" name="wwDirectionTypeCode" class="input" /></td>
+                         <th>废水受纳水体名称：</th>
+                            <td><input type="text" value="" id="wwReceivingWaterName" name="wwReceivingWaterName" class="input" /></td>
+						</tr>
+					</table>
+				</form>				
+			</div>
+			<div class="search-button">
+				<button type="button" id="search" onclick="onSearch();">查询</button>
+				<button type="reset" onclick="onReset();">重置</button>
+			</div>
+	    </div>
+	    <div class="list-list">
+	        <div id="dataBasic"></div>
+			<div id="pageContent"></div>
+	    </div>
+	</div>
+</body>
+</html>
